@@ -9,121 +9,114 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
     <style>
-       @page {
-         size: A4;
-         margin: 20mm;
-         background: url("{{logo_path }}") no-repeat center center;
-         background-size: cover;
-       }
+      @page {
+        size: A4;
+        margin: 20mm;
+        background: url("{{logo_path }}") no-repeat center center;
+        background-size: cover;
+      }
 
-       body {
-         font-family: Arial, sans-serif;
-         font-size: 12px;
-         margin: 20px;
-       }
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        margin: 20px;
+      }
 
-       .header,
-       .section {
-         border: 1px solid #000;
-         padding: 10px;
-         margin-bottom: 10px;
-       }
-       .header {
-         text-align: center;
-         font-weight: bold;
-       }
-       .header-img {
-         text-align: center;
-         margin-bottom: 10px;
-       }
+      .header,
+      .section {
+        border: 1px solid #000;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      .header {
+        text-align: center;
+        font-weight: bold;
+      }
+      .header-img {
+        text-align: center;
+        margin-bottom: 10px;
+      }
 
-       .header-img img {
-         width: 100%;
-         max-height: 100px;
-       }
-       .section-title {
-         font-weight: bold;
-         background: #eee;
-         padding: 5px;
-         margin-bottom: 5px;
-       }
-       .form-container {
-         display: flex;
-         justify-content: center;
-       }
-       form {
-         max-width: 600px;
+      .header-img img {
+        width: 100%;
+        max-height: 100px;
+      }
+      .section-title {
+        font-weight: bold;
+        background: #eee;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+      .form-container {
+        display: flex;
+        justify-content: center;
+      }
+      form {
+        max-width: 600px;
+      }
 
-       }
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      h2 {
+        text-align: center;
+        font-size: 20px;
+      }
+      .form-group label {
+        width: 250px;
+        margin-right: 10px; /* space between label and input */
+        font-weight: bold;
+      }
 
-       .form-group {
-         display: flex;
-         align-items: center;
-         margin-bottom: 8px;
-       }
-       h2 {
-         text-align: center;
-         font-size:20px;
-       }
-       .form-group label {
-         width: 250px;
-         margin-right: 8px; /* space between label and input */
-         font-weight: bold;
-         gap:10px;
-       }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        flex: 1;
+        padding: 4px 6px;
+      }
 
-       .form-group input,
-       .form-group select,
-       .form-group textarea {
-         flex: 1;
-         padding: 4px 6px;
-       }
+      .radio-group {
+        display: flex; /* Use flexbox to align radio buttons horizontally */
+        gap: 10px; /* Space between the radio buttons */
+        align-items: right; /* Vertically align the radio buttons with the text */
+        margin-left: 10px; /* Ensure it's not too far from the label */
+      }
+      .radio-group label {
+        display: flex;
+        align-items: center; /* Align radio buttons vertically with label */
+        gap: 5px; /* Space between radio button and its label text */
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 5px;
+        text-align: center;
+      }
+      .info-table td {
+        text-align: left;
+      }
 
-       .radio-group {
-         display: inline-flex;
-         gap: 5px;
-         font-weight: bold
-         align-items: left;
-         margin-bottom: 6px;
-         margin-left: 1px; /* brings it closer to label */
-       }
-
-       table {
-         width: 100%;
-         border-collapse: collapse;
-         margin-bottom: 10px;
-       }
-       th,
-       td {
-         border: 1px solid #000;
-         padding: 5px;
-         text-align: center;
-       }
-       .info-table td {
-         text-align: left;
-       }
-
-       textarea[name="clamp_time"],
-      textarea[name="cpb_time"] {
-       width: 200px;
-       height: 60px; /* adjust height as needed */
-       resize: vertical; /* optional: allows vertical resizing only */
-       }
-
-       button {
-         background-color:rgb(110, 29, 216);
-         color: white;
-         align: right;
-         padding: 10px 16px;
-         font-size: 14px;
-         border: none;
-         border-radius: 6px;
-         cursor: pointer;
-         margin: 10px;
-       }
-       button:hover {
-         background-color: #2563eb;
-       }
+      button {
+        background-color: rgb(110, 29, 216);
+        color: white;
+        align: right;
+        padding: 10px 16px;
+        font-size: 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      button:hover {
+        background-color: #2563eb;
+      }
     </style>
   </head>
   <body>
@@ -284,7 +277,7 @@
         </div>
 
         <div style="text-align: center">
-          <button type="submit">Generate ECMO PDF</button>
+          <button type="submit">Generate CPBS PDF</button>
         </div>
       </form>
     </div>
