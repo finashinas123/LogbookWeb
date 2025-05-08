@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @page {
+        size: A4; /* or auto */
+        margin: 20px; /* removes default page margin */
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0; /* Remove padding */
+        font-size: 16px;
+        position: relative;
+        z-index: 1;
+        height: 100vh; /* Full height */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center all content horizontally */
+        justify-content: center; /* Center all content vertically */
+      }
+     
+      .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Ensure it stays behind content */
+        background-image: url("{{ background_image_path }}");
+        background-size: cover; /* Ensure the image covers the entire screen */
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.5;
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        width: 100%; /* Make sure content stretches across the page */
+        max-width: 1200px; /* Limit max width */
+        padding: 10px;
+      }
+
+      .logo-header {
+        display: flex;
+        align-items: center; /* Center horizontally */
+        justify-content: center;
+        border-bottom: 2px solid #e11d48;
+        padding-bottom: 2px;
+        margin-bottom: 4px;
+        width: 100%;
+        gap: 80px;
+      }
+      .header-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: rgb(4, 12, 240);
+        line-height: 1.2;
+        margin: 0;
+        text-align: left;
+      }
+
+      .header-title h1 {
+        font-size: 20px;
+        margin: 2px 0 0;
+        padding: 0;
+        color: rgba(3, 65, 19, 0.97);
+      }
+
+      .header-logo {
+        height: 160px; /* Reduced logo height */
+        max-width: 240px; /* Reduced max width */
+        object-fit: contain;
+        margin-top: 10px.;
+      }
+
+      h2 {
+        font-family: Georgia, serif; /* Change font here */
+        color: rgba(114, 0, 0, 0.97);
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1;
+        border-bottom: 2px solidrgb(204, 16, 13);
+        padding-bottom: 6px;
+        margin-top: 0;
+      }
+
+      .card {
+        background: semi-transparent;
+        font-size: 12px;
+        border-radius: 4px;
+        line-height: 1;
+        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 12px;
+        font-weight: 600;
+        font-weight: bold;
+        color: rgb(216, 29, 29);
+        margin-bottom: 12px;
+        border-left: 4px solid #1d4ed8;
+        background-color: rgb(219, 219, 219);
+        padding-left: 10px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td {
+        padding: 8px 6px;
+        border: 1px solid #e2e8f0;
+        vertical-align: top;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f1f5f9;
+      }
+
+      td:first-child {
+        font-weight: 600;
+        background-color: #f8fafc;
+        width: 35%;
+        color: #0f172a;
+      }
+      
+      .signature-block {
+        margin-top: 20px;
+        text-align: right;
+      }
+
+      .signature-block p {
+        margin-bottom: 4px;
+        font-weight: normal;
+      }
+
+      .signature-block img {
+        height: 60px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div
+      class="background-image"
+      style="background-image: url('{{ bg_base64 }}');"
+    ></div>
+
+    <div class="content">
+      <div class="logo-header">
+        <div class="header-title">
+          Kingdom of Saudi Arabia,<br />
+          Ministry of Health,<br />
+          Directorate of Health Affairs.<br />
+          <h1>Madinah Cardiac Center</h1>
+        </div>
+
+        <img src="{{ logo_base64 }}" alt="Hospital Logo" class="header-logo" />
+      </div>
+
+      <h2>Cardio-Pulmonary Perfusion Data Form</h2>
+
+      <div style="display: flex; gap: 12px">
+        <div class="card" style="flex: 1">
+          <div class="section-title">Patient Details</div>
+          <table>
+            <tr>
+              <td>Name:</td>
+              <td>{{ data.name }}</td>
+            </tr>
+            <tr>
+              <td>Hospital:</td>
+              <td>Madinah Cardiac Center, KSA </td>
+            </tr>
+            <tr>
+              <td>Hospital ID:</td>
+              <td>{{ data.HID }}</td>
+            </tr>
+            <tr>
+              <td>Date:</td>
+              <td>{{ data.date }}</td>
+            </tr>
+            <tr>
+              <td>Age:</td>
+              <td>{{ data.age }}</td>
+            </tr>
+            <tr>
+              <td>Sex:</td>
+              <td>{{ data.sex }}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="card" style="flex: 1">
+          <div class="section-title">Patient Demographics</div>
+          <table>
+            <tr>
+              <td>Height:</td>
+              <td>{{ data.height }} cm</td>
+            </tr>
+            <tr>
+              <td>Weight:</td>
+              <td>{{ data.weight }} kg</td>
+            </tr>
+            
+            <tr>
+              <td>Flow Rate:</td>
+              <td>{{ data.flow_rate }} lpm</td>
+            </tr>
+            <tr>
+              <td>Surface Area:</td>
+              <td>{{ data.surface_area }} m²</td>
+            </tr>
+            <tr>
+              <td>Blood Group:</td>
+              <td>{{ data.blood_group }}</td>
+            </tr>
+            <tr>
+              <td>Hemoglobin:</td>
+              <td>{{ data.hemoglobin }} g/dl</td>
+            </tr>
+          </table>
+        </div>
+        <div class="card" style="flex: 1">
+          <div class="section-title">Team</div>
+          <table>
+            <tr>
+              <td>Surgeon:</td>
+              <td>Dr. {{ data.surgeon }}</td>
+            </tr>
+            <tr>
+              <td>Anaesthetist:</td>
+              <td>Dr. {{ data.anaesthetist }}</td>
+            </tr>
+            <tr>
+              <td>Perfusionist:</td>
+              <td>Kuttimalu P M</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"></div>
+        <table>
+          <tr>
+            <td>Diagnosis:</td>
+            
+            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
+              {{ data.diagnosis }}
+            </td>
+          </tr>
+          <tr>
+            <td>Proposed surgery:</td>
+            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
+              {{ data.procedure }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="display: flex; gap: 12px">
+        <div class="card" style="flex: 1">
+          <div class="section-title">Procedure Timings</div>
+          <table>
+            <tr>
+              <td>Clamp Time:</td>
+              <td>{{ data.clamp_time }} minutes</td>
+            </tr>
+            <tr>
+              <td>CPB Time:</td>
+              <td>{{ data.cpb_time }} minutes</td>
+            </tr>
+            <tr>
+              <td>TCA Time:</td>
+              <td>{{ data.tca_time }} minutes</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="card" style="flex: 1">
+          <div class="section-title">Cannulation</div>
+          <table>
+            <tr>
+              <td>Aortic:</td>
+              <td>{{ data.aortic }} Fr</td>
+            </tr>
+            <tr>
+              <td>SVC:</td>
+              <td>{{ data.svc }} Fr</td>
+            </tr>
+            <tr>
+              <td>DSSVC:</td>
+              <td>{{ data.dssvc }} Fr</td>
+            </tr>
+            <tr>
+              <td>IVC:</td>
+              <td>{{ data.ivc }} Fr</td>
+            </tr>
+            <tr>
+              <td>Femoral:</td>
+              <td>{{ data.femoral }} Fr</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <table>
+          <tr>
+            <td>Consumables:</td>
+            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
+              {{ data.consumables }}
+            </td>
+            </td>
+          </tr>
+          <tr>
+            <td>Comments:</td>
+            <td style="min-height: 50px; word-wrap: break-word; white-space: normal;">
+              {{ data.comments }}
+            </td>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="signature-block">
+        <p style=" font-size: 14px;">Perfusionist Signature:</p>
+        <img src="{{ sign_base64 }}" alt="Digital Signature">
+        <p style="margin-top: 4px; ">Kuttimalu P M</p>
+      </div>
+    </div>
+  </body>
+</html>

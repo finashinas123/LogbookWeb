@@ -1,0 +1,34 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+
+# PDF output folders
+pdfs/
+
+# WeasyPrint cache
+.weasyprint/
+
+# VSCode and IDE settings
+.vscode/
+.idea/
+
+# Pytest cache
+.pytest_cache/
