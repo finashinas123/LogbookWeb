@@ -20,6 +20,43 @@ def form():
 def form2():
     return render_template('form2.html')
 
+@app.route('/submit1', methods=['POST'])
+def submit1():
+    data = request.form.to_dict()
+
+    # Determine subfolder based on age group
+    age_group = data.get("age_group", "Unknown")
+    if age_group == "Adult":
+        folder = os.path.join("pdfs", "Adult")
+    elif age_group == "Pediatric":
+        folder = os.path.join("pdfs", "Pediatric")
+    else:
+        folder = os.path.join("pdfs", "other")
+
+    os.makedirs(folder, exist_ok=True)
+
+    # Load and encode images
+    logo_path = os.path.abspath("static/images/logo.png")
+    bg_path = os.path.abspath("static/images/opaclogo.png")
+    logo_base64 = encode_image_to_base64(logo_path)
+    bg_base64 = encode_image_to_base64(bg_path)
+    sign_path = os.path.abspath("static/images/sign.png")
+    sign_base64 = encode_image_to_base64(sign_path)
+
+    # Sanitize filename parts
+    procedure_part = data.get('procedure', 'procedure').split('\n')[0].strip().replace(' ', '_')[:50]
+    date_str = datetime.now().strftime('%Y-%m-%d')
+    filename = f"{procedure_part}_{date_str}.pdf"
+    pdf_path= os.path.join(folder, filename)
+
+    rendered1  =render_template('pdf1.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
+    pdf1 = HTML(string=rendered1).write_pdf(stylesheets=["static/style.css"])
+    with open(pdf_path, 'wb') as f:
+        f.write(pdf1)
+
+    return send_file(pdf_path, as_attachment=True)
+
+
 @app.route('/submit2', methods=['POST'])
 def submit2():
     data = request.form.to_dict()
@@ -47,60 +84,19 @@ def submit2():
     ecmo_part = data.get('ecmo', 'ecmo').split('\n')[0].strip().replace(' ', '_')[:50]
     date_str = datetime.now().strftime('%Y-%m-%d')
     filename = f"{ecmo_part}_{date_str}.pdf"
-    pdf_path = os.path.join(folder, filename)
+    pdf_path2 = os.path.join(folder, filename)
 
     # Use same or different template
-    rendered1 = render_template('pdf2.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
-    pdf = HTML(string=rendered1).write_pdf(stylesheets=["static/style.css"])
+    rendered2 = render_template('pdf2.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
+    pdf2 = HTML(string=rendered2).write_pdf(stylesheets=["static/style.css"])
 
-    with open(pdf_path, 'wb') as f:
-        f.write(pdf)
+    with open(pdf_path2, 'wb') as f:
+        f.write(pdf2)
 
-    return send_file(pdf_path, as_attachment=True)
+    return send_file(pdf_path2, as_attachment=True)
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    data = request.form.to_dict()
 
-    # Determine subfolder based on age group
-    age_group = data.get("age_group", "Unknown")
-    if age_group == "Adult":
-        folder = os.path.join("pdfs", "Adult")
-    elif age_group == "Pediatric":
-        folder = os.path.join("pdfs", "Pediatric")
-    else:
-        folder = os.path.join("pdfs", "other")
-
-    os.makedirs(folder, exist_ok=True)
-
-    # Load and encode images
-    logo_path = os.path.abspath("static/images/logo.png")
-    bg_path = os.path.abspath("static/images/opaclogo.png")
-    logo_base64 = encode_image_to_base64(logo_path)
-    bg_base64 = encode_image_to_base64(bg_path)
-    sign_path = os.path.abspath("static/images/sign.png")
-    sign_base64 = encode_image_to_base64(sign_path)
-
-    # Generate filename
-    procedure_part = data.get('procedure', 'procedure').split('\n')[0].strip().replace(' ', '_')[:50]
-    date_part = data.get('date', datetime.now().strftime('%Y-%m-%d'))
-    filename = f"{procedure_part}_{date_part}.pdf"
-    pdf_path = os.path.join(folder, filename)
-
-    # Render and generate PDF
-    rendered = render_template(
-        "pdf1.html",data=data,
-        logo_base64=logo_base64,
-        bg_base64=bg_base64,sign_base64=sign_base64
-    )
-    pdf = HTML(string=rendered).write_pdf(stylesheets=["static/style.css"])
-
-    with open(pdf_path, 'wb') as f:
-        f.write(pdf)
-
-    return send_file(pdf_path, as_attachment=True)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Use Render's port or default to 5000 locally
-    app.run(host='0.0.0.0', port=port)
+   
     app.run(debug=True)

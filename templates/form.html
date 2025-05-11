@@ -125,7 +125,8 @@
     </a>
     <h2>Cardio-Pulmonary Bypass Surgery Data Form</h2>
     <div class="form-container">
-      <form action="/submit2" method="post">
+      <form action="/submit1" method="post">
+        <input type="hidden" name="form_type" value="cpb" />
         <div class="form-group">
           <label>Name:</label>
           <input name="name" required />
@@ -215,11 +216,6 @@
           <label>Flow Rate:</label>
           <input name="flow_rate" />
         </div>
-
-        <div class="form-group">
-          <label>Surgeon:</label>
-          <input name="surgeon" />
-        </div>
         <div class="form-group">
           <label>Diagnosis:</label>
           <textarea name="diagnosis" rows="3"></textarea>
@@ -238,6 +234,7 @@
           <label>Perfusionist:</label>
           <input name="perfusionist" value="Kuttimalu P M" />
         </div>
+
         <div class="form-group">
           <label>Clamp Time:</label>
           <input name="clamp_time" />
@@ -277,7 +274,7 @@
         </div>
 
         <div style="text-align: center">
-          <button type="submit">Generate CPBS PDF</button>
+          <button type="/submit1">Generate CPBS PDF</button>
         </div>
       </form>
     </div>

@@ -120,12 +120,13 @@
     </style>
   </head>
   <body>
-    <a href="/">
+    <a href="/form">
       <button type="button">Go to CPBS Form</button>
     </a>
     <h2>Extra Corporeal Membrane Oxygenation Data Form</h2>
     <div class="form-container">
       <form action="/submit2" method="post">
+        <input type="hidden" name="form_type" value="ecmo" />
         <div class="form-group">
           <label>Name:</label>
           <input name="name" required />
@@ -256,7 +257,7 @@
           <textarea name="comments" rows="3"></textarea>
         </div>
         <div style="text-align: center">
-          <button type="submit">Generate ECMO PDF</button>
+          <button type="submit2">Generate ECMO PDF</button>
         </div>
       </form>
     </div>
