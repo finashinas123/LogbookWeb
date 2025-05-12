@@ -1,263 +1,211 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <title>ECMO LOGBOOK</title>
     <link rel="icon" href="/static/images/perficon.ico" type="image/x-icon" />
-
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
     />
-    <style>
-      @page {
-        size: A4;
-        margin: 20mm;
-        background: ur`l("{{logo_path }}") no-repeat center center;
-        background-size: cover;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        font-size: 12px;
-        margin: 20px;
-      }
-
-      .header,
-      .section {
-        border: 1px solid #000;
-        padding: 10px;
-        margin-bottom: 10px;
-      }
-      .header {
-        text-align: center;
-        font-weight: bold;
-      }
-      .header-img {
-        text-align: center;
-        margin-bottom: 10px;
-      }
-
-      .header-img img {
-        width: 100%;
-        max-height: 100px;
-      }
-      .section-title {
-        font-weight: bold;
-        background: #eee;
-        padding: 5px;
-        margin-bottom: 5px;
-      }
-      .form-container {
-        display: flex;
-        justify-content: center;
-      }
-      form {
-        max-width: 600px;
-      }
-
-      .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-      }
-      h2 {
-        font-size: 20px;
-        text-align: center;
-      }
-      .form-group label {
-        width: 250px;
-        margin-right: 8px; /* space between label and input */
-        font-weight: bold;
-      }
-
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-        flex: 1;
-        padding: 4px 6px;
-      }
-
-      .radio-group {
-        display: flex; /* Use flexbox to align radio buttons horizontally */
-        gap: 10px; /* Space between the radio buttons */
-        align-items: right; /* Vertically align the radio buttons with the text */
-        margin-left: 10px; /* Ensure it's not too far from the label */
-      }
-      .radio-group label {
-        display: flex;
-        align-items: center; /* Align radio buttons vertically with label */
-        gap: 5px; /* Space between radio button and its label text */
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 10px;
-      }
-      th,
-      td {
-        border: 1px solid #000;
-        padding: 5px;
-        text-align: center;
-      }
-      .info-table td {
-        text-align: left;
-      }
-      button {
-        background-color: rgba(97, 12, 161, 0.83);
-        color: white;
-        align: right;
-        padding: 10px 16px;
-        font-size: 14px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin: 10px;
-      }
-      button:hover {
-        background-color: #2563eb;
-      }
-    </style>
   </head>
-  <body>
-    <a href="/form">
-      <button type="button">Go to CPBS Form</button>
-    </a>
-    <h2>Extra Corporeal Membrane Oxygenation Data Form</h2>
-    <div class="form-container">
-      <form action="/submit2" method="post">
-        <input type="hidden" name="form_type" value="ecmo" />
-        <div class="form-group">
-          <label>Name:</label>
-          <input name="name" required />
+  <body class="bg-light">
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">
+        Extra Corporeal Membrane Oxygenation Data Form
+      </h2>
+
+      <form action="/" method="get" class="text-end mb-3">
+        <button type="submit" class="btn btn-link">Switch to CPBS Form</button>
+      </form>
+
+      <form
+        action="/submit2"
+        method="post"
+        class="bg-white p-4 rounded shadow-sm"
+      >
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Name:</label>
+            <input name="name" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Hospital:</label>
+            <input
+              name="hospital"
+              value="Madinah Cardiac Center, KSA"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Hospital ID:</label>
+            <input name="HID" class="form-control" required />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Hospital:</label>
-          <input name="hospital" value="Madinah Cardiac Center, KSA" />
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Date:</label>
+            <input name="date" type="date" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Age:</label>
+            <input name="age" class="form-control" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Blood Group:</label>
+            <select name="blood_group" class="form-select" required>
+              <option value="">-- Select --</option>
+              <option value="A+">A+</option>
+              <option value="A-">A−</option>
+              <option value="B+">B+</option>
+              <option value="B-">B−</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB−</option>
+              <option value="O+">O+</option>
+              <option value="O-">O−</option>
+            </select>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>Hospital ID:</label>
-          <input name="HID" required />
-        </div>
-
-        <div class="form-group">
-          <label>Date:</label>
-          <input name="date" type="date" required />
-        </div>
-
-        <div class="form-group">
-          <label>Age:</label>
-          <input name="age" required />
-        </div>
-        <div class="form-group">
-          <label>Adult/Pediatric:</label>
-          <div class="radio-group">
-            <label
-              ><input type="radio" name="age_group" value="Adult" required />
-              Adult</label
-            >
-            <label
-              ><input
+        
+        <div class="row mb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="border rounded p-3">
+            <label class="form-label d-block">Age Group:</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="age_group"
+                value="Adult"
+                required
+              />
+              <label class="form-check-label">Adult</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
                 type="radio"
                 name="age_group"
                 value="Pediatric"
                 required
               />
-              Pediatric</label
-            >
+              <label class="form-check-label">Pediatric</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sex Column -->
+          <div class="col-md-6 col-sm-12 mt-3 mt-md-0">
+            <div class="border rounded p-3">
+            <label class="form-label d-block">Sex:</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="sex"
+                value="Male"
+                required
+              />
+              <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="sex"
+                value="Female"
+                required
+              />
+              <label class="form-check-label">Female</label>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Sex:</label>
-          <div class="radio-group">
-            <label
-              ><input type="radio" name="sex" value="Male" required />
-              Male</label
-            >
-            <label
-              ><input type="radio" name="sex" value="Female" required />
-              Female</label
-            >
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label">Height:</label>
+            <input name="height" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Weight:</label>
+            <input name="weight" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Surface Area:</label>
+            <input name="surface_area" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Flow Rate:</label>
+            <input name="flow_rate" class="form-control" />
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="blood_group">Blood Group:</label>
-          <select name="blood_group" id="blood_group" required>
-            <option value="">-- Select --</option>
-            <option value="A+">A+</option>
-            <option value="A-">A−</option>
-            <option value="B+">B+</option>
-            <option value="B-">B−</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB−</option>
-            <option value="O+">O+</option>
-            <option value="O-">O−</option>
-          </select>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Surgeon:</label>
+            <input name="surgeon" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Perfusionist:</label>
+            <input
+              name="perfusionist"
+              value="Kuttimalu P M"
+              class="form-control"
+            />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Height:</label>
-          <input name="height" />
-
-          <label>Weight:</label>
-          <input name="weight" />
-
-          <label>Surface Area:</label>
-          <input name="surface_area" />
-
-          <label>Flow Rate:</label>
-          <input name="flow_rate" />
+        <div class="row mb-3">
+          <div class="col-md-5">
+            <label class="form-label">ECMO:</label>
+             <textarea name="ecmo" rows="2" class="form-control"></textarea>
         </div>
-        <div class="form-group">
-          <label>Surgeon:</label>
-          <input name="surgeon" />
-
-          <label>Perfusionist:</label>
-          <input name="perfusionist" value="Kuttimalu P M" />
+          <div class="col-md-5">
+            <label class="form-label">Reason:</label>
+            <textarea name="reason" rows="2" class="form-control"></textarea>
         </div>
 
-        <div class="form-group">
-          <label>ECMO:</label>
-
-          <textarea name="ecmo" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Reason:</label>
-          <textarea name="reason" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label>ECMO ON:</label>
-          <input name="ECMO ON" />
-
-          <label>ECMO OFF:</label>
-          <input name="ECMO OFF" />
-
-          <label>Total Time:</label>
-          <input name="total" />
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">ECMO ON:</label>
+            <input name="ECMO ON" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">ECMO OFF:</label>
+            <input name="ECMO OFF" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Total Time:</label>
+            <input name="total" class="form-control" />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Drainage:</label>
-          <input name="drainage" />
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Drainage:</label>
+            <input name="drainage" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Return:</label>
+            <input name="return" class="form-control" />
+          </div>
         </div>
-        <div class="form-group">
-          <label>Return:</label>
-          <input name="return" />
+
+        <div class="row mb-3">
+          <div class="col-md-5">
+            <label class="form-label">Consumables:</label>
+            <textarea name="consumables" rows="2" class="form-control"></textarea>
+          </div>
+          <div class="col-md-5">
+            <label class="form-label">Comments:</label>
+            <textarea name="comments" rows="2" class="form-control"></textarea>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Consumables:</label>
-          <textarea name="consumables" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Comments:</label>
-          <textarea name="comments" rows="3"></textarea>
-        </div>
-        <div style="text-align: center">
-          <button type="submit2">Generate ECMO PDF</button>
+        <div class="text-center">
+          <button type="submit2" class="btn btn-primary">
+            Generate ECMO PDF
+          </button>
         </div>
       </form>
     </div>

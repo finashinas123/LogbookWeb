@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CPBS LOGBOOK</title>
+    <link rel="icon" href="/static/images/perficon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light" <!DOCTYPE html>
+    <html>
+      <head>
+        <title>CPBS LOGBOOK</title>
+        <link
+          rel="icon"
+          href="/static/images/perficon.ico"
+          type="image/x-icon"
+        />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+      </head>
+      <body class="bg-light">
+        <div class="container mt-5">
+          <h2 class="text-center mb-4">
+            Cardio-Pulmonary Bypass Surgery Data Form
+          </h2>
+          <form
+            action="/submit1"
+            method="POST"
+            class="bg-white p-4 rounded shadow-sm"
+          >
+            <input type="hidden" name="form_type" value="cpb" />
+
+            <div class="mb-3">
+              <label class="form-label">Name:</label>
+              <input name="name" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Hospital:</label>
+              <input
+                name="hospital"
+                class="form-control"
+                value="Madinah Cardiac Center, KSA"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Hospital ID:</label>
+              <input name="HID" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Date:</label>
+              <input name="date" type="date" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Age:</label>
+              <input name="age" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-block">Age Group:</label>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="age_group"
+                  value="Adult"
+                  required
+                />
+                <label class="form-check-label">Adult</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="age_group"
+                  value="Pediatric"
+                  required
+                />
+                <label class="form-check-label">Pediatric</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-block">Sex:</label>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sex"
+                  value="Male"
+                  required
+                />
+                <label class="form-check-label">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sex"
+                  value="Female"
+                  required
+                />
+                <label class="form-check-label">Female</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Blood Group:</label>
+              <select name="blood_group" class="form-select" required>
+                <option value="">-- Select --</option>
+                <option value="A+">A+</option>
+                <option value="A-">A−</option>
+                <option value="B+">B+</option>
+                <option value="B-">B−</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB−</option>
+                <option value="O+">O+</option>
+                <option value="O-">O−</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Hemoglobin:</label>
+              <input name="hemoglobin" class="form-control" />
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label">Height:</label>
+                <input name="height" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Weight:</label>
+                <input name="weight" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Surface Area:</label>
+                <input name="surface_area" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Flow Rate:</label>
+                <input name="flow_rate" class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Diagnosis:</label>
+              <textarea
+                name="diagnosis"
+                rows="2"
+                class="form-control"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Proposed Surgery:</label>
+              <textarea
+                name="procedure"
+                rows="2"
+                class="form-control"
+              ></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Surgeon:</label>
+                <input name="surgeon" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Anaesthetist:</label>
+                <input name="anaesthetist" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Perfusionist:</label>
+                <input
+                  name="perfusionist"
+                  value="Kuttimalu P M"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Clamp Time:</label>
+                <input name="clamp_time" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">CPB Time:</label>
+                <input name="cpb_time" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">TCA Time:</label>
+                <input name="tca_time" class="form-control" />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-2">
+                <label class="form-label">Aortic:</label
+                ><input name="aortic" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">SVC:</label
+                ><input name="svc" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">DSSVC:</label
+                ><input name="dssvc" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">IVC:</label
+                ><input name="ivc" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Femoral:</label
+                ><input name="femoral" class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Consumables:</label>
+              <textarea
+                name="consumables"
+                rows="2"
+                class="form-control"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Comments:</label>
+              <textarea
+                name="comments"
+                rows="2"
+                class="form-control"
+              ></textarea>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">
+                Generate CPBS PDF
+              </button>
+            </div>
+          </form>
+
+          <form action="/form3" method="GET" class="text-center mt-3">
+            <button type="submit" class="btn btn-link">
+              Switch to ECMO Form
+            </button>
+          </form>
+        </div>
+      </body>
+    </html>
+
+    <div class="container mt-5">
+      <div class="d-flex justify-content-end mb-3">
+        <form action="/form3" method="GET">
+          <button type="submit" class="btn btn-outline-secondary">
+            Switch to ECMO Form
+          </button>
+        </form>
+      </div>
+
+      <h2 class="text-center mb-4">
+        Cardio-Pulmonary Bypass Surgery Data Form
+      </h2>
+      <form
+        action="/submit1"
+        method="POST"
+        class="bg-white p-4 rounded shadow-sm"
+      >
+        <input type="hidden" name="form_type" value="cpb" />
+
+        <div class="mb-3">
+          <label class="form-label">Name:</label>
+          <input name="name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Hospital:</label>
+          <input
+            name="hospital"
+            class="form-control"
+            value="Madinah Cardiac Center, KSA"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Hospital ID:</label>
+          <input name="HID" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Date:</label>
+          <input name="date" type="date" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Age:</label>
+          <input name="age" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label d-block">Age Group:</label>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="age_group"
+              value="Adult"
+              required
+            />
+            <label class="form-check-label">Adult</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="age_group"
+              value="Pediatric"
+              required
+            />
+            <label class="form-check-label">Pediatric</label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label d-block">Sex:</label>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sex"
+              value="Male"
+              required
+            />
+            <label class="form-check-label">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sex"
+              value="Female"
+              required
+            />
+            <label class="form-check-label">Female</label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Blood Group:</label>
+          <select name="blood_group" class="form-select" required>
+            <option value="">-- Select --</option>
+            <option value="A+">A+</option>
+            <option value="A-">A−</option>
+            <option value="B+">B+</option>
+            <option value="B-">B−</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB−</option>
+            <option value="O+">O+</option>
+            <option value="O-">O−</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Hemoglobin:</label>
+          <input name="hemoglobin" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label">Height:</label>
+            <input name="height" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Weight:</label>
+            <input name="weight" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Surface Area:</label>
+            <input name="surface_area" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Flow Rate:</label>
+            <input name="flow_rate" class="form-control" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Diagnosis:</label>
+          <textarea name="diagnosis" rows="2" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Proposed Surgery:</label>
+          <textarea name="procedure" rows="2" class="form-control"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Surgeon:</label>
+            <input name="surgeon" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Anaesthetist:</label>
+            <input name="anaesthetist" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Perfusionist:</label>
+            <input
+              name="perfusionist"
+              value="Kuttimalu P M"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Clamp Time:</label>
+            <input name="clamp_time" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">CPB Time:</label>
+            <input name="cpb_time" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">TCA Time:</label>
+            <input name="tca_time" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-2">
+            <label class="form-label">Aortic:</label
+            ><input name="aortic" class="form-control" />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">SVC:</label
+            ><input name="svc" class="form-control" />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">DSSVC:</label
+            ><input name="dssvc" class="form-control" />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">IVC:</label
+            ><input name="ivc" class="form-control" />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Femoral:</label
+            ><input name="femoral" class="form-control" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Consumables:</label>
+          <textarea name="consumables" rows="2" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Comments:</label>
+          <textarea name="comments" rows="2" class="form-control"></textarea>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">
+            Generate CPBS PDF
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

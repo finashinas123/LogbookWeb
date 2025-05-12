@@ -3,6 +3,7 @@ from weasyprint import HTML
 import os
 from datetime import datetime
 import base64
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -23,36 +24,46 @@ def form2():
 @app.route('/submit1', methods=['POST'])
 def submit1():
     data = request.form.to_dict()
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    base_folder = os.path.join(desktop, "pdfs")
 
-    # Determine subfolder based on age group
+    # Determine subfolder by age group
     age_group = data.get("age_group", "Unknown")
     if age_group == "Adult":
-        folder = os.path.join("pdfs", "Adult")
+        folder = os.path.join(base_folder, "Adult")
     elif age_group == "Pediatric":
-        folder = os.path.join("pdfs", "Pediatric")
+        folder = os.path.join(base_folder, "Pediatric")
     else:
-        folder = os.path.join("pdfs", "other")
+        folder = os.path.join(base_folder, "Other")
 
     os.makedirs(folder, exist_ok=True)
 
     # Load and encode images
     logo_path = os.path.abspath("static/images/logo.png")
     bg_path = os.path.abspath("static/images/opaclogo.png")
+    sign_path = os.path.abspath("static/images/sign.png")
     logo_base64 = encode_image_to_base64(logo_path)
     bg_base64 = encode_image_to_base64(bg_path)
-    sign_path = os.path.abspath("static/images/sign.png")
     sign_base64 = encode_image_to_base64(sign_path)
 
-    # Sanitize filename parts
+    # Filename setup
     procedure_part = data.get('procedure', 'procedure').split('\n')[0].strip().replace(' ', '_')[:50]
-    date_str = datetime.now().strftime('%Y-%m-%d')
-    filename = f"{procedure_part}_{date_str}.pdf"
-    pdf_path= os.path.join(folder, filename)
+    date_input = data.get('date', '')
+    try:
+        date_obj = datetime.strptime(date_input, '%Y-%m-%d')
+        date_str = date_obj.strftime('%Y-%m-%d')
+    except ValueError:
+        date_str = datetime.now().strftime('%Y-%m-%d')
 
-    rendered1  =render_template('pdf1.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
-    pdf1 = HTML(string=rendered1).write_pdf(stylesheets=["static/style.css"])
+    filename = f"{procedure_part}_{date_str}.pdf"
+    pdf_path = os.path.join(folder, filename)
+
+    # Render and write PDF
+    rendered = render_template('pdf1.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64, sign_base64=sign_base64)
+    pdf = HTML(string=rendered).write_pdf(stylesheets=["static/style.css"])
+
     with open(pdf_path, 'wb') as f:
-        f.write(pdf1)
+        f.write(pdf)
 
     return send_file(pdf_path, as_attachment=True)
 
@@ -60,14 +71,16 @@ def submit1():
 @app.route('/submit2', methods=['POST'])
 def submit2():
     data = request.form.to_dict()
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    base_folder = os.path.join(desktop, "pdfs")
 
     age_group = data.get("age_group", "Unknown")
     if age_group == "Adult":
-        folder = os.path.join("pdfs", "Adult Ecmos")
+        folder = os.path.join(desktop,"pdfs", "Adult Ecmos")
     elif age_group == "Pediatric":
-        folder = os.path.join("pdfs", "Pediatric Ecmos")
+        folder = os.path.join(desktop,"pdfs", "Pediatric Ecmos")
     else:
-        folder = os.path.join("pdfs", "other")
+        folder = os.path.join(desktop,"pdfs", "other")
    
     os.makedirs(folder, exist_ok=True)
 
@@ -82,18 +95,24 @@ def submit2():
 
     # Create PDF filename
     ecmo_part = data.get('ecmo', 'ecmo').split('\n')[0].strip().replace(' ', '_')[:50]
-    date_str = datetime.now().strftime('%Y-%m-%d')
-    filename = f"{ecmo_part}_{date_str}.pdf"
-    pdf_path2 = os.path.join(folder, filename)
+    Date_input = data.get('date', '')
+    try:
+        date_obj = datetime.strptime(Date_input, '%Y-%m-%d')
+        date_str = date_obj.strftime('%Y-%m-%d')
+    except ValueError:
+        date_str = datetime.now().strftime('%Y-%m-%d')
 
-    # Use same or different template
+    filename = f"{ecmo_part}_{date_str}.pdf"
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    pdf_path = os.path.join(folder, filename)
+   
     rendered2 = render_template('pdf2.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
     pdf2 = HTML(string=rendered2).write_pdf(stylesheets=["static/style.css"])
 
-    with open(pdf_path2, 'wb') as f:
+    with open(pdf_path, 'wb') as f:
         f.write(pdf2)
 
-    return send_file(pdf_path2, as_attachment=True)
+    return send_file(pdf_path, as_attachment=True)
 
 
 
