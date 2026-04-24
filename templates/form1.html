@@ -53,10 +53,10 @@
         function calc() {
             let h = parseFloat(document.getElementById("height").value) || 0;
             let w = parseFloat(document.getElementById("weight").value) || 0;
-            let ci =  2.4;
+        
         
             let bsa = (h > 0 && w > 0) ? Math.sqrt((h * w) / 3600) : 0;
-            let flow = bsa * ci;
+            let flow = bsa * 2.4;
         
             document.getElementById("bsa").value = bsa.toFixed(2);
             document.getElementById("flow").value = flow.toFixed(2);
