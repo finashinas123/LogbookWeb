@@ -454,7 +454,7 @@ td:first-child,
     <div class="card">
         <table> 
             <tr> 
-                <td class="label" style="width:30%"> Doppler / CT Scan Report for Vascular Access: </td> 
+                <td class="inline" style="width:30%"> Doppler / CT Scan Report for Vascular Access: </td> 
                 <td class="inline" style="width:70%"> No {{ "☑" if data.doppler=="No" else "☐" }} &nbsp;&nbsp; Yes {{ "☑" if data.doppler=="Yes" else "☐" }} </td> 
             </tr> 
             <tr>
@@ -467,7 +467,7 @@ td:first-child,
                  <td>{{ data.VD }}</td> 
             </tr> 
             <tr>
-                <td class="label" style="width:30%"> Presence of Stenosis or Occlusions: </td> 
+                <td class="inline" style="width:30%"> Presence of Stenosis or Occlusions: </td> 
                 
                 <td class="inline">
                     No {{ "☑" if data.sNo else "☐" }}
