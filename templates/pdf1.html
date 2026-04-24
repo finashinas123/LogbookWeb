@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      @page {
-        size: A4; /* or auto */
-        margin: 20px; /* removes default page margin */
-      }
+<head>
+<style>
+@page {
+    size: A4;
+    margin: 10mm;
+}
 
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0; /* Remove padding */
-        font-size: 16px;
-        position: relative;
-        z-index: 1;
-        height: 100vh; /* Full height */
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Center all content horizontally */
-        justify-content: center; /* Center all content vertically */
-      }
-     
-      .background-image {
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    color: #111;
+    line-height: 1.2;
+}
+
+/* BACKGROUND */
+
+.background-image {
         position: fixed;
         top: 0;
         left: 0;
@@ -32,314 +33,473 @@
         background-size: cover; /* Ensure the image covers the entire screen */
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.5;
-      }
-
-      .content {
-        position: relative;
-        z-index: 1;
-        width: 100%; /* Make sure content stretches across the page */
-        max-width: 1200px; /* Limit max width */
-        padding: 10px;
-      }
-
-      .logo-header {
-        display: flex;
-        align-items: center; /* Center horizontally */
-        justify-content: center;
-        border-bottom: 2px solid #e11d48;
-        padding-bottom: 2px;
-        margin-bottom: 4px;
-        width: 100%;
-        gap: 80px;
-      }
-      .header-title {
-        font-size: 12px;
-        font-weight: 600;
-        color: rgb(4, 12, 240);
-        line-height: 1.2;
-        margin: 0;
-        text-align: left;
-        flex: 1;
         
       }
 
-      .header-title h1 {
-        font-size: 20px;
-        margin: 2px 0 0;
-        padding: 0;
-        color: rgba(3, 65, 19, 0.97);
-      }
+/* HEADER */
+.logo-header {
+    position: relative;
+    text-align: center;
+    border-bottom: 1px solid #136c06;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+}
 
-      .header-logo {
-        height: 160px; /* Reduced logo height */
-        max-width: 240px; /* Reduced max width */
-        object-fit: contain;
-        margin-top: 10px.;
-      }
+.header-logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100px;
+}
 
-      h2 {
-        font-family: Georgia, serif; /* Change font here */
-        color: rgba(114, 0, 0, 0.97);
-        font-size: 20px;
-        font-weight: bold;
-        line-height: 1;
-        border-bottom: 2px solidrgb(204, 16, 13);
-        padding-bottom: 6px;
-        margin-top: 0;
-        text-align: center;
-      }
+.header-title {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0456f9;
+}
 
-      .card {
-        background: semi-transparent;
-        font-size: 12px;
-        border-radius: 4px;
-        line-height: 1;
-        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
-        padding: 5px;
-        margin-bottom: 10px;
-      }
+.header-title h1 {
+    font-size: 12px;
+    margin: 0;
+    color: #2f7a02;
+}
 
-      .section-title {
-        font-size: 12px;
-        font-weight: 600;
-        font-weight: bold;
-        color: rgb(216, 29, 29);
-        margin-bottom: 12px;
-        border-left: 4px solid #1d4ed8;
-        background-color: rgb(219, 219, 219);
-        padding-left: 10px;
-      }
+/* TITLE */
+h2 {
+    text-align: center;
+    font-size: 18px;
+    margin: 4px 0 6px;
+    color: #b91c1c;
+}
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+/* CARD */
+.card {
+    border: 1px solid #e7ebf2;
+    padding: 4px;
+    margin-bottom: 4px;
+    background: #f7fcf4;
+    
+    
+}
 
-      td {
-        padding: 8px 6px;
-        border: 1px solid #e2e8f0;
-        vertical-align: top;
-      }
+/* SECTION TITLE */
+.section-title {
+    background: #d3e9d9;
+    font-weight: 700;
+    padding: 3px 5px;
+    font-size: 12px;
+    border: 1px solid #002a78;
+    margin-bottom: 3px;
+}
 
-      tr:nth-child(even) {
-        background-color: #f1f5f9;
-      }
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 3px;
+    font-size: 10px;
+}
 
-      td:first-child {
-        font-weight: 600;
-        background-color: #f8fafc;
-        width: 35%;
-        color: #0f172a;
-      }
-      
-      .signature-block {
-        margin-top: 20px;
-        text-align: right;
-      }
+td {
+    border: 1px solid #002a78;
+    padding: 3px;
+    font-size: 10px;
+    vertical-align: middle;
+    word-break: break-word;
+}
 
-      .signature-block p {
-        margin-bottom: 4px;
-        font-weight: normal;
-      }
+/* LABELS */
+td:first-child,
+.label {
+    font-weight: 700;
+    background: #f9fafb;
+}
 
-      .signature-block img {
-        height: 60px;
-        max-width: 200px;
-        object-fit: contain;
-      }
+/* FLEX */
+.row {
+    display: flex;
+    gap: 4px;
+}
 
+.col {
+    flex: 1;
+}
 
-    </style>
-  </head>
-  <body>
-    <div
-      class="background-image"
-      style="background-image: url('{{ bg_base64 }}');"
-    ></div>
+/* INLINE TEXT */
+.inline {
+    line-height: 1.3;
+    font-weight: bold;
 
-    <div class="content">
-      <div class="logo-header">
+}
+
+.preop {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;   /* 🔥 REQUIRED for equal columns */
+}
+
+/* COLUMN CONTROL */
+.col-main  { width: 20%; }
+.col-label { width: 10%; }
+.col-value { width: 10%; }
+
+/* CELL STYLING */
+.preop td {
+    
+    border: 1px solid #002a78;
+    padding: 3px 5px;
+    font-size: 10px;
+}
+
+/* LABELS */
+.label {
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+    background: #f3f4f6;
+}
+
+.sub-label {
+    font-weight: bold;
+    background: #f9fafb;
+}
+
+/* VALUES */
+.preop td:not(.label):not(.sub-label) {
+    text-align: center;
+}
+/* MAIN LEFT LABEL */
+.main-label {
+    font-weight: bold;
+    font-size: 12px;
+    text-align:left;   /* 🔥 aligns label to right */
+    vertical-align: middle;
+    width: 20%;
+    background: #d0efc4d0;
+}
+
+/* SMALL LABELS */
+.sub-label {
+    font-weight: bold;   
+    background: #f9fafb;
+    width: 10%;
+}
+</style>
+</head>
+
+<body>
+
+    !-- Background -->
+<div class="background-image"
+    style="background-image: url('data:image/png;base64,{{ bg_base64 }}');">
+</div>
+
+<div class="content"> 
+<!-- HEADER -->
+    <div class="logo-header">
+        <img src="data:image/png;base64,{{ logo_base64 }}" class="header-logo">
+
         <div class="header-title">
-          Kingdom of Saudi Arabia,<br />
-          Ministry of Health,<br />
-          Directorate of Health Affairs.<br />
-          <h1>Madinah Cardiac Center</h1>
+            Department Of Cardiac Perfusion<br>
+            <h1>Madinah Cardiac Center</h1>
         </div>
-
-        <img src="{{ logo_base64 }}" alt="Hospital Logo" class="header-logo" />
-      </div>
-
-      <h2>Cardio-Pulmonary Bypass Perfusion Data Form</h2>
-
-      <div style="display: flex; gap: 12px">
-        <div class="card" style="flex: 1">
-          <div class="section-title">Patient Details</div>
-          <table>
-            <tr>
-              <td>Name:</td>
-              <td>{{ data.name }}</td>
-            </tr>
-            <tr>
-              <td>Hospital:</td>
-              <td>Madinah Cardiac Center, KSA </td>
-            </tr>
-            <tr>
-              <td>Hospital ID:</td>
-              <td>{{ data.HID }}</td>
-            </tr>
-            <tr>
-              <td>Date:</td>
-              <td>{{ data.date }}</td>
-            </tr>
-            <tr>
-              <td>Age:</td>
-              <td>{{ data.age }}</td>
-            </tr>
-            <tr>
-              <td>Sex:</td>
-              <td>{{ data.sex }}</td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="card" style="flex: 1">
-          <div class="section-title">Patient Demographics</div>
-          <table>
-            <tr>
-              <td>Height:</td>
-              <td>{{ data.height }} cm</td>
-            </tr>
-            <tr>
-              <td>Weight:</td>
-              <td>{{ data.weight }} kg</td>
-            </tr>
-            
-            <tr>
-              <td>Flow Rate:</td>
-              <td>{{ data.flow_rate }} lpm</td>
-            </tr>
-            <tr>
-              <td>Surface Area:</td>
-              <td>{{ data.surface_area }} m²</td>
-            </tr>
-            <tr>
-              <td>Blood Group:</td>
-              <td>{{ data.blood_group }}</td>
-            </tr>
-            <tr>
-              <td>Hemoglobin:</td>
-              <td>{{ data.hemoglobin }} g/dl</td>
-            </tr>
-          </table>
-        </div>
-        <div class="card" style="flex: 1">
-          <div class="section-title">Team</div>
-          <table>
-            <tr>
-              <td>Surgeon:</td>
-              <td>Dr. {{ data.surgeon }}</td>
-            </tr>
-            <tr>
-              <td>Anaesthetist:</td>
-              <td>Dr. {{ data.anaesthetist }}</td>
-            </tr>
-            <tr>
-              <td>Perfusionist:</td>
-              <td>Kuttimalu P M</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"></div>
-        <table>
-          <tr>
-            <td>Diagnosis:</td>
-            
-            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
-              {{ data.diagnosis }}
-            </td>
-          </tr>
-          <tr>
-            <td>Proposed surgery:</td>
-            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
-              {{ data.procedure }}
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div style="display: flex; gap: 12px">
-        <div class="card" style="flex: 1">
-          <div class="section-title">Procedure Timings</div>
-          <table>
-            <tr>
-              <td>Clamp Time:</td>
-              <td>{{ data.clamp_time }} minutes</td>
-            </tr>
-            <tr>
-              <td>CPB Time:</td>
-              <td>{{ data.cpb_time }} minutes</td>
-            </tr>
-            <tr>
-              <td>TCA Time:</td>
-              <td>{{ data.tca_time }} minutes</td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="card" style="flex: 1">
-          <div class="section-title">Cannulation</div>
-          <table>
-            <tr>
-              <td>Aortic:</td>
-              <td>{{ data.aortic }} Fr</td>
-            </tr>
-            <tr>
-              <td>SVC:</td>
-              <td>{{ data.svc }} Fr</td>
-            </tr>
-            <tr>
-              <td>DSSVC:</td>
-              <td>{{ data.dssvc }} Fr</td>
-            </tr>
-            <tr>
-              <td>IVC:</td>
-              <td>{{ data.ivc }} Fr</td>
-            </tr>
-            <tr>
-              <td>Femoral:</td>
-              <td>{{ data.femoral }} Fr</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <table>
-          <tr>
-            <td>Consumables:</td>
-            <td style="min-height: 40px; word-wrap: break-word; white-space: normal;">
-              {{ data.consumables }}
-            </td>
-            </td>
-          </tr>
-          <tr>
-            <td>Comments:</td>
-            <td style="min-height: 50px; word-wrap: break-word; white-space: normal;">
-              {{ data.comments }}
-            </td>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="signature-block">
-        <p style=" font-size: 14px;">Perfusionist Signature:</p>
-        <img src="{{ sign_base64 }}" alt="Digital Signature">
-        <p style="margin-top: 4px; ">Kuttimalu P M</p>
-      </div>
     </div>
-  </body>
+
+    <h2>Cardiac Perfusion Pre Assessment Form</h2>
+
+    <!-- BASIC -->
+    <div class="row">
+        <div class="card col">
+            <div class="section-title">Basic Info</div>
+            <table>
+                <tr><td class="inline">Name</td><td class="inline">{{ data.name }}</td></tr>
+                <tr><td class="inline">MRN</td><td class="inline">{{ data.MRN }}</td></tr>
+                <tr><td class="inline">DOB</td><td class="inline">{{ data.DOB }}</td></tr>
+                <tr><td class="inline">Consultant</td><td class="inline">{{ data.consultant }}</td></tr>
+            </table>
+        </div>
+
+        <div class="card col">
+            <div class="section-title">Patient Demographics</div>
+            <table>
+                <tr><td class="inline">Height</td><td class="inline">{{ data.height }}</td></tr>
+                <tr><td class="inline">Weight</td><td class="inline">{{ data.weight }}</td></tr>
+                <tr><td class="inline">BSA</td><td class="inline">{{ data.bsa }}</td></tr>
+                <tr><td class="inline">CI</td><td class="inline">{{ data.ci }}</td></tr>
+                <tr><td class="inline">Flows</td><td class="inline">{{ data.flows }}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ALLERGY -->
+    <div class="card">
+        <table>
+            <tr>
+                <td>Allergy</td>
+                <td class="inline">
+                {{ "☑" if data.allergy=="No" else "☐" }} No
+                {{ "☑" if data.allergy=="Yes" else "☐" }} Yes
+                </td>
+                <td class="inline">{{ data.allergyyes }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- DIAGNOSIS -->
+    <div class="card">
+        <table>
+            <tr>
+                <td >Diagnosis</td>
+                <td class="inline" style="height:30px";> {{ data.diagnosis }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- GENDER -->
+    <div class="card">
+        <table>
+            <tr>
+                <td>Gender</td>
+                <td class="inline">
+                    {{ "☑" if data.gender=="Male" else "☐" }} Male
+                    {{ "☑" if data.gender=="Female" else "☐" }} Female
+                </td>
+                <td class="inline">Pregnancy Test:</td>
+                <td class="inline">
+                    Neg {{ "☑" if data.neg else "☐" }}
+                    N/A {{ "☑" if data.NA else "☐" }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- TYPE OF SURGERY -->
+    <div class="card">
+        <table>
+        <tr>
+            <td>Type of Surgery</td>
+            <td class="inline">
+            Elect {{ "☑" if data.elective else "☐" }}
+            Emerg {{ "☑" if data.emergency else "☐" }}
+            Urg {{ "☑" if data.urgent else "☐" }}
+            Redo {{ "☑" if data.redo else "☐" }}
+            Off {{ "☑" if data.offpump else "☐" }}
+            Standby {{ "☑" if data.standby else "☐" }}
+            </td>
+        </tr>
+        </table>
+    </div>
+
+    <!-- CARDIAC STATUS PER ECHO-->
+    <div class="card">
+        <table>
+            <tr>
+                <td class="inline" colspan="3">Cardiac status per Echo:</td>
+                <td class="inline" colspan="3">{{ data.cardiac }}</td>
+                <td class="inline" style="text-align:right;" >EF(%)</td>
+                <td class="inline">{{ data.ef }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ANGIOGRAPHY REPORT -->
+    <div class="card">
+        <table>
+            <tr>
+                <td>Angiography Report:</td>
+                <td class="inline">{{ data.report }}</td>
+            </tr>
+        </table>
+    </div>
+
+     <!-- Significant Co-morbidities -->
+    <div class="card">
+        <table>
+
+            <tr>
+                <td style="width:25%;">Significant Co-morbidities:</td>
+            
+                <td class="inline" style="width:45%;"><span class="box {{ 'checked' if data.HTN else '' }}"></span> 
+                    HTN {{ "☑" if data.HTN else "☐" }} &nbsp;&nbsp;
+                    DM {{ "☑" if data.DM else "☐" }} &nbsp;&nbsp;
+                    Renal {{ "☑" if data.renal else "☐" }} &nbsp;&nbsp;
+                    Anaemia {{ "☑" if data.aneamia else "☐" }} &nbsp;&nbsp;
+                    Prev {{ "☑" if data.previous else "☐" }} &nbsp;&nbsp;
+                    Other {{ "☑" if data.other else "☐" }}
+                </td>    
+                <td class="inline" style="width:30%;">{{ data.yesother }}</td>
+            </tr>
+            
+        </table>
+    </div>
+
+    <!-- MECHANICAL SUPPORT -->
+    <div class="card">
+        <table >
+            <tr>
+                <td>Mechanical Support:</td>
+                <td class="inline">
+                    IABP {{ "☑" if data.IABP else "☐" }}
+                    ECMO {{ "☑" if data.ecmo else "☐" }}
+                    VAD {{ "☑" if data.vad else "☐" }}
+                    N/A {{ "☑" if data.na else "☐" }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- COAGULATION STATUS -->
+    <div class="card">
+        <table>
+            <tr>
+                    <td class="inline" colspan="2">Coagulation Status:</td>
+                    <td class="inline">Blood Group</td>
+                    <td>{{ data.bg }}</td>
+                    <td class="inline">Heparin sensitivity</td>
+                    <td>{{ data.heparin }}</td>
+                
+                    <td class="inline">HIT {{ "☑" if data.HIT else "☐" }}</td>
+                    <td class="inline">Sickle Cell Anaemia {{ "☑" if data.sickle else "☐" }}</td>
+                    <td class="inline">Cold Agglutnins {{ "☑" if data.cold else "☐" }}</td>
+            </tr> 
+        </table>
+    </div>
+    <!-- CEREBRAL,PULMONARY AND RENAL STATUS -->
+    <div class="card">
+        <table>
+            <tr><td>Cerebral Status:</td><td>{{ data.cerebral }}</td></tr>
+            <tr><td>Pulmonary Status:</td><td>{{ data.pulmonary }}</td></tr>
+            <tr><td>Renal Status:</td><td>{{ data.renal }}</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <table class="preop">
+    
+            <!-- DEFINE COLUMN WIDTHS ONCE -->
+            <colgroup>
+                <col class="col-main">
+                <col class="col-label"><col class="col-value">
+                <col class="col-label"><col class="col-value">
+                <col class="col-label"><col class="col-value">
+            </colgroup>
+    
+            <!-- ROW 1 -->
+            <tr>
+                <td class="label" rowspan="3">Pre-Operative Tests</td>
+    
+                <td class="sub-label">HB</td>
+                <td>{{ data.HB }}</td>
+    
+                <td class="sub-label">WBC</td>
+                <td>{{ data.WBC }}</td>
+    
+                <td class="sub-label">PLT</td>
+                <td>{{ data.PLT }}</td>
+                <td class="sub-label">HbA1C</td>
+                <td>{{ data.HbA1C }}</td>
+            </tr>
+    
+            <!-- ROW 2 -->
+            <tr>
+    
+                <td class="sub-label">Creatinine</td>
+                <td>{{ data.creatinine }}</td>
+    
+                <td class="sub-label">ESR</td>
+                <td>{{ data.ESR }}</td>
+                <td class="sub-label">Na</td>
+                <td>{{ data.Na }}</td>
+    
+                <td class="sub-label">K</td>
+                <td>{{ data.K }}</td>
+            </tr>
+    
+            <!-- ROW 3 -->
+            
+            <tr>
+                <td class="sub-label">MRSA</td>
+                <td colspan="3">{{ data.MRSA }}</td>
+    
+                <td class="sub-label">Serology</td>
+                <td colspan="3">{{ data.serology }}</td>
+            </tr>
+    
+        </table>
+    </div>
+    <!-- CANNULATION  -->
+    <div class="card">
+        <table>
+        <tr>
+            <td>Cannulation:</td>
+            <td class="inline">
+                Central{{ "☑" if data.central else "☐" }}
+                Peripheral{{ "☑" if data.peripheral else "☐" }}
+                Mininal Invasive{{ "☑" if data.minimal else "☐" }}
+                Mini-Sternotomy{{ "☑" if data.mini else "☐" }}
+            </td>
+        </tr>
+        </table>
+    </div>
+
+    <!-- DOPPLER ULTRA/CT REPORT--> 
+    <div class="card">
+        <table> 
+            <tr> 
+                <td class="label" style="width:30%"> Doppler / CT Scan Report for Vascular Access: </td> 
+                <td class="inline" style="width:70%"> No {{ "☑" if data.doppler=="No" else "☐" }} &nbsp;&nbsp; Yes {{ "☑" if data.doppler=="Yes" else "☐" }} </td> 
+            </tr> 
+            <tr>
+                <td class="inline">Blood Flow</td>
+                <td>{{ data.BF }}</td> 
+                
+            </tr> 
+            <tr>
+                 <td class="inline">Vessel Diameter</td> 
+                 <td>{{ data.VD }}</td> 
+            </tr> 
+            <tr>
+                <td class="label" style="width:30%"> Presence of Stenosis or Occlusions: </td> 
+                
+                <td class="inline">
+                    No {{ "☑" if data.sNo else "☐" }}
+                    &nbsp;&nbsp;
+                    Yes {{ "☑" if data.sYes else "☐" }}
+                    &nbsp;&nbsp;
+                    Not Mentioned {{ "☑" if data.snot else "☐" }}
+                </td>
+            </tr> 
+        </table> 
+    </div> 
+
+  
+    <!--PERFUSION CARE PLAN -->
+    <div class="card">
+        <div class="main-label">Perfusion Care Plan:</div>
+            <table>
+                <tr>
+                    <td style="height:30px;">{{ data.plan }}</td>
+                </tr>
+            </table>
+    </div>
+
+    <!-- PERFUSIONIST AND DATE -->
+    <div class="card">
+        <table>
+            <tr>
+                <td  class="inline" style="text-align:left;">
+                    Perfusionist: {{ data.perfusionist }}
+                </td>
+                <td  class="inline" style="text-align:right;">
+                    Date: {{ data.date }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
 </html>

@@ -1,8 +1,15 @@
+
 services:
   - type: web
-    name: perfusion-logbook
-    env: python-3.10.12
-    buildCommand: pip install -r requirements.txt
+    name: perfusion assessment form
+    runtime: python
+    buildCommand: |
+      pip install -r requirements.txt
+      apt-get update && apt-get install -y \
+        libcairo2 \
+        libpango-1.0-0 \
+        libpangocairo-1.0-0 \
+        libgdk-pixbuf2.0-0 \
+        libffi-dev \
+        shared-mime-info
     startCommand: gunicorn app:app
-    region: oregon
-    plan: free

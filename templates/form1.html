@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CP Pre-Assessment Form</title>
+
+    <!-- Bootstrap form -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial;
+            font-size: 13px;
+            background: #f8f9fa;
+        }
+
+        .form-box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            background: #e5e7eb;
+            font-weight: bold;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        input, select, textarea {
+            font-size: 13px !important;
+        }
+
+        .form-control {
+            height: 34px;
+        }
+
+        textarea.form-control {
+            height: auto;
+        }
+
+        .check-inline {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .right-align {
+            text-align: right;
+        }
+    </style>
+    <script>
+        function calc() {
+            let h = parseFloat(document.getElementById("height").value) || 0;
+            let w = parseFloat(document.getElementById("weight").value) || 0;
+            let ci = parseFloat(document.getElementById("ci").value) || 2.4;
+        
+            let bsa = (h > 0 && w > 0) ? Math.sqrt((h * w) / 3600) : 0;
+            let flow = bsa * ci;
+        
+            document.getElementById("bsa").value = bsa.toFixed(2);
+            document.getElementById("flow").value = flow.toFixed(2);
+        }
+        </script>
+        <script>
+            function toggleDoppler() {
+                let yes = document.querySelector('input[name="doppler"][value="Yes"]').checked;
+                document.getElementById("dopplerFields").style.display = yes ? "block" : "none";
+            }
+            </script>
+</head>
+
+<body>
+
+<div class="container mt-4">
+<div class="form-box">
+
+<h4 class="text-center mb-4">Cardiac Perfusion Pre Assessment Form</h4>
+
+<form method="POST" action="/cpbs">
+
+<!-- ================= PATIENT INFO ================= -->
+<div class="row mb-3">
+
+    <div class="col-md-3">
+        <label>Name</label>
+        <input name="name" class="form-control">
+    </div>
+
+    <div class="col-md-3">
+        <label>MRN</label>
+        <input name="MRN" type="number" class="form-control">
+    </div>
+
+    <div class="col-md-3">
+        <label>DOB</label>
+        <input type="date" name="DOB" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <label>Consultant</label>
+        <select name="consultant" class="form-control">
+            <option value="">-- Select Doctor --</option>
+
+            <option value="Dr. Ahmed">Dr. Ahmed</option>
+            <option value="Dr. Hasan">Dr. Hasan</option>
+            <option value="Dr. Alamodi">Dr. Alamodi</option>
+            <option value="Dr. Majed">Dr. Majed</option>
+            
+
+        </select>
+    </div>
+
+</div>
+<!-- ================= DEMOGRAPHICS ================= -->
+<div class="row mb-3 align-items-end">
+    
+    <div class="col-md-2">
+        <label class="form-label">Height (cm)</label>
+        <input id="height" name="height" type="number" class="form-control" oninput="calc()">
+    </div>
+
+    <div class="col-md-2">
+        <label class="form-label">Weight (kg)</label>
+        <input id="weight" name="weight" type="number" class="form-control" oninput="calc()">
+    </div>
+
+    <div class="col-md-2">
+        <label class="form-label">BSA</label>
+        <input id="bsa" name="bsa" type="number" step="0.01"  class="form-control" readonly>
+    </div>
+
+    <div class="col-md-2">
+        <label class="form-label">Cardiac Index</label>
+        <input id="ci" name="ci" value="2.4" type="number" step="0.01" class="form-control" oninput="calc()">
+    </div>   
+
+    <div class="col-md-2">
+        <label class="form-label">Flow</label>
+        <input id="flow" name="flows" type="number" step="0.01"  class="form-control" readonly>
+    </div>
+
+</div>
+<!-- ================= DIAGNOSIS ================= -->
+<div class="mb-3">
+    <label class="section-title">Diagnosis</label>
+    <textarea name="diagnosis" class="form-control" rows="2"></textarea>
+</div>
+<!-- ================= ALLERGY ================= -->
+<div class="mb-3">
+    <label class="section-title">Allergy</label>
+
+    <div class="check-inline">
+        <label><input type="radio" name="allergy" value="No"> No</label>
+        <label><input type="radio" name="allergy" value="Yes"> Yes</label>
+        <input name="allergyyes" class="form-control w-50">
+    </div>
+</div>
+
+
+<div class="row mb-3">
+
+    <!-- LEFT: GENDER -->
+    <div class="col-md-6">
+        <label class="section-title d-block">Gender</label>
+        <div class="check-inline">
+            <label><input type="radio" name="gender" value="Male"> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+        </div>
+    </div>
+
+    <!-- RIGHT: PREGNANCY -->
+    <div class="col-md-6">
+        <label class="section-title d-block">Pregnancy Test</label>
+        <div class="check-inline">
+            <label><input type="checkbox" name="neg"> Negative</label>
+            <label><input type="checkbox" name="NA"> N/A</label>
+        </div>
+    </div>
+
+</div>
+<!-- ================= SURGERY ================= -->
+<div class="mb-3">
+    <label class="section-title">Type of Surgery</label>
+
+    <div class="check-inline flex-wrap">
+        <label><input type="checkbox" name="elective"> Elective</label>
+        <label><input type="checkbox" name="emergency"> Emergency</label>
+        <label><input type="checkbox" name="urgent"> Urgent</label>
+        <label><input type="checkbox" name="redo"> Redo</label>
+        <label><input type="checkbox" name="offpump"> Off Pump</label>
+        <label><input type="checkbox" name="standby"> Standby</label>
+    </div>
+</div>
+<div class="row mb-3 align-items-end">
+
+    <!-- LEFT: CARDIAC STATUS -->
+    <div class="col-md-8">
+        <label class="section-title d-block">Cardiac Status per Echo</label>
+        <textarea name="cardiac" class="form-control" rows="1"></textarea>
+    </div>
+
+    <!-- RIGHT: EF -->
+    <div class="col-md-4">
+        <label class="section-title d-block">EF (%)</label>
+        <input name="ef" class="form-control">
+    </div>
+
+</div>
+<!-- ================= Angio report ================= -->
+<div class="mb-3">
+    <label class="section-title">Angiography Report</label>
+    <textarea name="report" class="form-control" rows="1"></textarea>
+</div>
+
+<!-- ================= CO-MORBIDITIES ================= -->
+<div class="mb-3">
+    <label class="section-title">Significant Co-Morbidities</label>
+
+    <div class="check-inline flex-wrap">
+
+        <label><input type="checkbox" name="HTN"> HTN</label>
+        <label><input type="checkbox" name="DM"> DM</label>
+        <label><input type="checkbox" name="renal"> Renal Impairment</label>
+        <label><input type="checkbox" name="aneamia"> Anaemia</label>
+        <label><input type="checkbox" name="previous"> Previous Surgeries</label>
+
+        <!-- OTHER + INPUT INLINE -->
+        <div class="d-flex align-items-center gap-2">
+            <label class="mb-0">
+                <input type="checkbox" name="other"> Other
+            </label>
+            <input name="yesother" class="form-control" style="width: 500px;" placeholder="If other,Specify">
+        </div>
+
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="section-title">Mechanical Support</label>
+
+    <div class="check-inline flex-wrap">
+
+        <label><input type="checkbox" name="IABP"> IABP</label>
+        <label><input type="checkbox" name="ecmo"> ECMO</label>
+        <label><input type="checkbox" name="vad"> VAD</label>
+        <label><input type="checkbox" name="na"> N/A</label>
+
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="section-title d-block">Coagulation Status</label>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <label>Blood Group</label>
+            <input name="bg" class="form-control">
+        </div>
+
+        <div class="col-md-6">
+            <label>Heparin Sensitivity</label>
+            <input name="heparin" class="form-control">
+        </div>
+
+    </div>
+    <div class="mb-3">
+        <div class="check-inline flex-wrap">
+            <label><input type="checkbox" name="HIT"> HIT</label>
+            <label><input type="checkbox" name="sickle"> Sickle Cell Aneamia</label>
+            <label><input type="checkbox" name="cold"> Cold Agglutnins</label>
+         </div>
+
+    </div>
+</div>
+</div>
+
+<div class="row mb-3">
+
+    <div class="col-md-4">
+        <label class="section-title d-block">Cerebral Status</label>
+        <input name="cerebral" class="form-control">
+    </div>
+
+    <div class="col-md-4">
+        <label class="section-title d-block">Pulmonary Status</label>
+        <input name="pulmonary" class="form-control">
+    </div>
+
+    <div class="col-md-4">
+        <label class="section-title d-block">Renal Status</label>
+        <input name="renal" class="form-control">
+    </div>
+
+</div>
+<!-- ================= LABS ================= -->
+<div class="mb-3">
+    <label class="section-title">Significant Pre-Operative Tests:</label>
+    <div class="row">
+        <div class="col-md-2"><label>HB</label><input name="HB" type="number" step="00.01" class="form-control"></div>
+        <div class="col-md-2"><label>WBC</label><input name="WBC" type="number" step="00.01" class="form-control"></div>
+        <div class="col-md-2"><label>PLT</label><input name="PLT" type="number" class="form-control"></div>
+        <div class="col-md-2"><label>HbA1C</label><input name="HbA1C" type="number" step="00.01" class="form-control"></div>
+        <div class="col-md-2"><label>Creatinine</label><input name="creatinine" type="number" class="form-control"></div>
+        <div class="col-md-2"><label>ESR</label><input name="ESR" type="number" step="00.01" class="form-control"></div>
+        <div class="col-md-2"><label>Na</label><input name="Na" type="number" class="form-control"></div>
+        <div class="col-md-2"><label>K</label><input name="K" type="number" step="00.01" class="form-control"></div>
+        <div class="col-md-2"><label>MRSA</label><input name="MRSA"  class="form-control"></div>
+        <div class="col-md-2"><label>Serology</label><input name="serology"  class="form-control"></div>
+    </div>
+</div>
+
+
+<div class="mb-3">
+    <label class="section-title">Cannulation:</label>
+
+    <div class="check-inline flex-wrap">
+
+        <label><input type="checkbox" name="central"> Central</label>
+        <label><input type="checkbox" name="peripheral"> Peripheral</label>
+        <label><input type="checkbox" name="minimal"> Minimal Invasive</label>
+        <label><input type="checkbox" name="mini"> Mini-Sternotomy</label>
+
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="section-title">Peripheral Vascular Disease:</label>
+
+    <div class="check-inline flex-wrap">
+
+        <label><input type="checkbox" name="pNo"> No</label>
+        <label><input type="checkbox" name="pYes"> Yes</label>
+        <label><input type="checkbox" name="pnot"> Not Mentioned</label>
+
+    </div>
+</div>
+<div class="mb-3">
+
+    <label class="section-title">Doppler / CT Scan Report for Vascular Access:</label>
+
+    <div class="check-inline flex-wrap">
+        <label><input type="radio" name="doppler" value="No" onclick="toggleDoppler()"> No</label>
+        <label><input type="radio" name="doppler" value="Yes" onclick="toggleDoppler()"> Yes</label>
+    </div>
+
+    <!-- ONLY SHOW IF YES -->
+    <div id="dopplerFields" style="display:none; margin-top:10px;">
+
+        <div class="row">
+            <div class="col-md-2">
+                <label>Blood Flow</label>
+                <input type="number" name="BF" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+                <label>Vessel Diameter</label>
+                <input type="number" name="VD" class="form-control">
+            </div>
+        </div>
+
+       
+    </div>
+
+</div>
+<div class="mb-3">
+    <!-- ROW 2 -->
+    <label class="section-title">
+        Presence of Stenosis or Occlusions:
+    </label>
+
+    <div class="check-inline flex-wrap">
+
+        <label><input type="checkbox" name="sNo"> No</label>
+        <label><input type="checkbox" name="sYes"> Yes</label>
+        <label><input type="checkbox" name="snot"> Not Mentioned</label>
+
+    </div>
+
+</div>
+<!-- ================= PLAN ================= -->
+<div class="mb-3">
+    <label class="section-title">Perfusion Care Plan</label>
+    <textarea name="plan" class="form-control" rows="2"></textarea>
+</div>
+
+<!-- ================= SIGNATURE ================= -->
+<div class="row mb-3">
+
+    <div class="col-md-2">
+        <label class="section-title">Perfusionist</label>
+        <select name="perfusionist" class="form-control">
+            <option value="">-- Select Perfusionist --</option>
+            <option value="Kuttimalu P M">Kuttimalu P M</option>
+            <option value="Mohamed Asif">Mohamed Asif</option>
+            <option value="Amal Usman">Amal Usman</option>
+            <option value="Lulu Baker">Lulu Baker</option>
+            <option value="Juniad Ahmed">Juniad Ahmed</option>
+            <option value="Muhammad Waseem">Muhammad Waseem</option>
+            <option value="Rashid Khan">Rashid Khan</option>
+            <option value="Ayaz Khan">Ayaz Khan</option>
+            <option value="Hussein Emad">Hussein Emad</option>
+            <option value="Ishrath Banu">Ishrath Banu</option>
+            <option value="Rouf ul Islam">Rouf ul Islam</option>
+            <option value="Hussain Sadakathullah">Hussain Sadakathullah</option>
+            <option value="Muhammad Nabeel">Muhammad Nabeel</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 text-end">
+        <label class="section-title">Date</label>
+        <input type="date" name="date" class="form-control">
+    </div>
+
+</div>
+
+<!-- ================= BUTTON ================= -->
+<div class="text-center mt-3">
+    <button type="submit" class="btn btn-primary px-5">
+        Download PDF
+    </button>
+</div>
+
+</form>
+
+</div>
+</div>
+
+</body>
+</html>

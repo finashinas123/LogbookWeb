@@ -1,121 +1,146 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, Response, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
 from weasyprint import HTML
-import os
-from datetime import datetime
-import base64
 from pathlib import Path
+import base64
+from datetime import datetime
+import re
 
+# ------------------ APP SETUP ------------------ #
 app = Flask(__name__)
+app.secret_key = "supersecretkey"
 
-def encode_image_to_base64(image_path):
-    with open(image_path, 'rb') as image_file:
-        encoded = base64.b64encode(image_file.read()).decode('utf-8')
-    ext = os.path.splitext(image_path)[1].replace('.', '')
-    return f"data:image/{ext};base64,{encoded}"
+basedir = Path(__file__).resolve().parent
 
-@app.route('/')
-def form():
-    return render_template('form.html')
- 
-@app.route('/form2')
-def form2():
-    return render_template('form2.html')
+# ------------------ DATABASE ------------------ #
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'logbook.db'}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-@app.route('/submit1', methods=['POST'])
-def submit1():
-    data = request.form.to_dict()
-    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    base_folder = os.path.join(desktop, "pdfs")
+# ------------------ MODEL ------------------ #
+class Report(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    form_type = db.Column(db.String(50))
+    filename = db.Column(db.String(300))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Determine subfolder by age group
-    age_group = data.get("age_group", "Unknown")
-    if age_group == "Adult":
-        folder = os.path.join(base_folder, "Adult")
-    elif age_group == "Pediatric":
-        folder = os.path.join(base_folder, "Pediatric")
-    else:
-        folder = os.path.join(base_folder, "Other")
+# ------------------ INIT DB ------------------ #
+with app.app_context():
+    db.create_all()
 
-    os.makedirs(folder, exist_ok=True)
+# ------------------ PDF FOLDER ------------------ #
+PDF_ROOT = basedir / "generated_pdfs"
+PDF_ROOT.mkdir(exist_ok=True)
 
-    # Load and encode images
-    logo_path = os.path.abspath("static/images/logo.png")
-    bg_path = os.path.abspath("static/images/opaclogo.png")
-    sign_path = os.path.abspath("static/images/sign.png")
-    logo_base64 = encode_image_to_base64(logo_path)
-    bg_base64 = encode_image_to_base64(bg_path)
-    sign_base64 = encode_image_to_base64(sign_path)
+# ------------------ IMAGE ENCODING ------------------ #
+def encode(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
-    # Filename setup
-    procedure_part = data.get('procedure', 'procedure').split('\n')[0].strip().replace(' ', '_')[:50]
-    date_input = data.get('date', '')
+logo_base64 = encode(basedir / "static/images/logo.png")
+bg_base64 = encode(basedir / "static/images/opaclogo.png")
+sign_base64 = encode(basedir / "static/images/sign.png")
+
+# ------------------ SAFE FILENAME ------------------ #
+def safe_filename(text):
+    text = text or "procedure"
+    text = re.sub(r'[^a-zA-Z0-9_-]', '_', text)
+    return text[:50]
+
+# ------------------ FORMAT DATE ------------------ #
+def format_date(date_str):
+    """
+    Converts YYYY-MM-DD → DD/MM/YYYY
+    """
+    if not date_str:
+        return ""
     try:
-        date_obj = datetime.strptime(date_input, '%Y-%m-%d')
-        date_str = date_obj.strftime('%Y-%m-%d')
-    except ValueError:
-        date_str = datetime.now().strftime('%Y-%m-%d')
+        return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d/%m/%Y")
+    except:
+        return date_str.replace("/", "-")
 
-    filename = f"{procedure_part}_{date_str}.pdf"
-    pdf_path = os.path.join(folder, filename)
+# ------------------ HOME ------------------ #
 
-    # Render and write PDF
-    rendered = render_template('pdf1.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64, sign_base64=sign_base64)
-    pdf = HTML(string=rendered).write_pdf(stylesheets=["static/style.css"])
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        return cpbs()   # forward POST to your PDF logic
+    return render_template("form1.html")
+# ------------------ DOWNLOAD ------------------ #
+@app.route('/download/<path:filepath>')
+def download(filepath):
+    return send_from_directory(PDF_ROOT, filepath, as_attachment=True)
 
-    with open(pdf_path, 'wb') as f:
+# ------------------ PDF GENERATION ------------------ #
+def generate_pdf(template, data, folder_name):
+    folder = PDF_ROOT / folder_name
+    folder.mkdir(parents=True, exist_ok=True)
+
+    MRN = safe_filename(data.get("MRN"))
+
+    form_date_raw = data.get("date")
+    formatted_date = format_date(form_date_raw)
+
+    safe_date = formatted_date.replace("/", "-")
+
+    filename = folder / f"{MRN}_{safe_date}.pdf"
+
+    filename.parent.mkdir(parents=True, exist_ok=True)
+
+    html = render_template(
+        template,
+        data=data,
+        logo_base64=logo_base64,
+        bg_base64=bg_base64,
+        sign_base64=sign_base64
+    )
+
+    pdf = HTML(string=html).write_pdf()
+
+    with open(filename, "wb") as f:
         f.write(pdf)
 
-    return send_file(pdf_path, as_attachment=True)
+    db.session.add(Report(
+        form_type=folder_name,
+        filename=str(filename.relative_to(PDF_ROOT))
+    ))
+    db.session.commit()
 
+    return filename, pdf
 
-@app.route('/submit2', methods=['POST'])
-def submit2():
-    data = request.form.to_dict()
-    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    base_folder = os.path.join(desktop, "pdfs")
+@app.route('/cpbs', methods=['GET', 'POST'])
+def cpbs():
+    if request.method == 'POST':
+        data = request.form.to_dict()
 
-    age_group = data.get("age_group", "Unknown")
-    if age_group == "Adult":
-        folder = os.path.join(desktop,"pdfs", "Adult Ecmos")
-    elif age_group == "Pediatric":
-        folder = os.path.join(desktop,"pdfs", "Pediatric Ecmos")
-    else:
-        folder = os.path.join(desktop,"pdfs", "other")
-   
-    os.makedirs(folder, exist_ok=True)
+        # ---------------- CALCULATIONS ---------------- #
+        try:
+            h = float(data.get("height", 0))
+            w = float(data.get("weight", 0))
+            ci = float(data.get("ci", 2.4))
 
-    # Load and encode images
-    logo_path = os.path.abspath("static/images/logo.png")
-    bg_path = os.path.abspath("static/images/opaclogo.png")
-    logo_base64 = encode_image_to_base64(logo_path)
-    bg_base64 = encode_image_to_base64(bg_path)
-    sign_path = os.path.abspath("static/images/sign.png")
-    sign_base64 = encode_image_to_base64(sign_path)
+            bsa = ((h * w) / 3600) ** 0.5 if h and w else 0
+            flow = bsa * ci
+        except:
+            bsa, flow = 0, 0
 
+        data["bsa"] = round(bsa, 2)
+        data["flow"] = round(flow, 2)
 
-    # Create PDF filename
-    ecmo_part = data.get('ecmo', 'ecmo').split('\n')[0].strip().replace(' ', '_')[:50]
-    Date_input = data.get('date', '')
-    try:
-        date_obj = datetime.strptime(Date_input, '%Y-%m-%d')
-        date_str = date_obj.strftime('%Y-%m-%d')
-    except ValueError:
-        date_str = datetime.now().strftime('%Y-%m-%d')
+        # ---------------- USE COMMON PDF FUNCTION ---------------- #
+        filename, pdf = generate_pdf("pdf1.html", data, "cpa")
 
-    filename = f"{ecmo_part}_{date_str}.pdf"
-    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    pdf_path = os.path.join(folder, filename)
-   
-    rendered2 = render_template('pdf2.html', data=data, logo_base64=logo_base64, bg_base64=bg_base64,sign_base64=sign_base64)
-    pdf2 = HTML(string=rendered2).write_pdf(stylesheets=["static/style.css"])
+        # ---------------- DOWNLOAD ---------------- #
+        return Response(
+            pdf,
+            mimetype="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename={filename.name}"
+            }
+        )
 
-    with open(pdf_path, 'wb') as f:
-        f.write(pdf2)
+    return render_template("form1.html")
 
-    return send_file(pdf_path, as_attachment=True)
-
-
-
-if __name__ == '__main__':
-   
+# ------------------ RUN ------------------ #
+if __name__ == "__main__":
     app.run(debug=True)
