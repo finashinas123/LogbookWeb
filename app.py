@@ -5,14 +5,27 @@ from pathlib import Path
 import base64
 from datetime import datetime
 import re
+import os
+from pathlib import Path
+import platform
 
 # ------------------ APP SETUP ------------------ #
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
-basedir = Path("C:\OR Data\MCC USER FILES\CPAFORMS")
+#basedir = Path("C:\OR Data\MCC USER FILES\CPAFORMS")#
 
-#basedir = Path(__file__).resolve().parent
+#basedir = Path(__file__).resolve().parent#
 
+# Detect environment
+if platform.system() == "Windows":
+    # Save to C drive
+    basedir = Path("C:/CPAFORMS")
+else:
+    # Linux / Render
+    basedir = Path("/tmp")
+
+# Ensure folder exists
+basedir.mkdir(parents=True, exist_ok=True)
 # ------------------ DATABASE ------------------ #
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'logbook.db'}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
