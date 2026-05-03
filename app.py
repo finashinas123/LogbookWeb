@@ -9,8 +9,9 @@ import re
 # ------------------ APP SETUP ------------------ #
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
+basedir = Path("C:\OR Data\MCC USER FILES\CPAFORMS")
 
-basedir = Path(__file__).resolve().parent
+#basedir = Path(__file__).resolve().parent
 
 # ------------------ DATABASE ------------------ #
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'logbook.db'}"
