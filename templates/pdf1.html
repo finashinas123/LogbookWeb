@@ -423,8 +423,11 @@ input[type="checkbox"] {
               
                  <label class="cb">
                     <span class="box {{ 'checked' if data.IABP else '' }}"></span> IABP
+                      &nbsp;&nbsp;
                     <span class="box {{ 'checked' if data.ecmo else '' }}"></span> ECMO
+                      &nbsp;&nbsp;
                     <span class="box {{ 'checked' if data.vad else '' }}"></span> VAD
+                      &nbsp;&nbsp;
                     <span class="box {{ 'checked' if data.na else '' }}"></span> N/A
                 
                 </label>
@@ -443,7 +446,8 @@ input[type="checkbox"] {
 
                 Blood Group: <strong>{{ data.bg }}</strong>
 
-
+                &nbsp;&nbsp;
+                
                 HIT
                 <span class="box {{ 'checked' if data.HIT else '' }}"></span>
 
