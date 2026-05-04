@@ -20,22 +20,6 @@ body {
     line-height: 1.3;
 }
 
-/* BACKGROUND */
-
-.background-image {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; /* Ensure it stays behind content */
-        background-image: url("{{ background_image_path }}");
-        background-size: cover; /* Ensure the image covers the entire screen */
-        background-repeat: no-repeat;
-        background-position: center;
-        
-      }
-
 /* HEADER */
 .logo-header {
     position: relative;
@@ -110,12 +94,10 @@ td {
     vertical-align: middle;
     word-break: break-word;
 }
-
-/* LABELS */
-td:first-child,
-.label {
-    font-weight: 300;
-    background: #f9fafb;
+input[type="checkbox"] {
+    transform: scale(1.8);   /* increase size */
+    margin-right: 8px;
+    accent-color: black;     /* makes tick darker */
 }
 
 /* FLEX */
@@ -127,12 +109,40 @@ td:first-child,
 .col {
     flex: 1;
 }
+.cb {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 5px;
+}
 
+/* box */
+.box {
+    width: 14px;
+    height: 14px;
+    border: 2px solid black;
+    display: inline-block;
+    position: relative;
+}
+
+/* tick */
+.box.checked::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    width: 5px;
+    height: 9px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
 /* INLINE TEXT */
 .inline {
     line-height: 1;
     font-weight: bold;
     font-size: 12px;
+    background: #f9fafb;
    
 
 }
@@ -161,13 +171,14 @@ td:first-child,
     font-weight: bold;
     text-align: left;
     vertical-align: middle;
-    background: #f3f4f6;
-    font-size: 10px;
+    background: #d0efc4d0;
+    font-size: 11px;
 }
 
 .sub-label {
     font-weight: bold;
-    background: #f9fafb;
+    background: #f3f4f6;
+    
 }
 
 /* VALUES */
@@ -184,12 +195,6 @@ td:first-child,
     background: #d0efc4d0;
 }
 
-/* SMALL LABELS */
-.sub-label {
-    font-weight: bold;   
-    background: #f9fafb;
-    width: 10%;
-}
 </style>
 </head>
 
@@ -236,71 +241,114 @@ td:first-child,
     <div class="card">
         <table>
             <tr>
-                <td>Allergy</td>
+                <td class="main-label" >Allergy</td>
                 <td class="inline">
-                {{ "☑" if data.allergy=="No" else "☐" }} No
-                {{ "☑" if data.allergy=="Yes" else "☐" }} Yes
+                    <label class="cb">
+                        <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
+                        Yes
+                    </label>
                 </td>
                 <td class="inline">{{ data.allergyyes }}</td>
             </tr>
         </table>
     </div>
+   
 
     <!-- DIAGNOSIS -->
     <div class="card">
         <table>
             <tr>
-                <td >Diagnosis</td>
+                <td class="main-label" >Diagnosis</td>
                 <td class="inline" style="height:20px";> {{ data.diagnosis }}</td>
             </tr>
             <tr>
-                <td >Procedure</td>
+                <td class="main-label"  >Procedure</td>
                 <td class="inline" style="height:20px";> {{ data.procedure }}</td>
             </tr>
         </table>
     </div>
 
-    <!-- GENDER -->
-    <div class="card">
-        <table>
-            <tr>
-                <td>Gender</td>
-                <td class="inline">
-                    {{ "☑" if data.gender=="Male" else "☐" }} Male
-                    {{ "☑" if data.gender=="Female" else "☐" }} Female
-                </td>
-                <td class="inline">Pregnancy Test:</td>
-                <td class="inline">
-                    Neg {{ "☑" if data.neg else "☐" }}
-                    N/A {{ "☑" if data.NA else "☐" }}
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <!-- TYPE OF SURGERY -->
-    <div class="card">
-        <table>
+   <!-- GENDER -->
+<div class="card">
+    <table>
         <tr>
-            <td>Type of Surgery</td>
+            <td class="main-label">Gender</td>
+
             <td class="inline">
-            Elect {{ "☑" if data.elective else "☐" }}
-            Emerg {{ "☑" if data.emergency else "☐" }}
-            Urg {{ "☑" if data.urgent else "☐" }}
-            Redo {{ "☑" if data.redo else "☐" }}
-            Off {{ "☑" if data.offpump else "☐" }}
-            Standby {{ "☑" if data.standby else "☐" }}
+
+                Male
+                <span class="box {{ 'checked' if data.gender=='Male' else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Female
+                <span class="box {{ 'checked' if data.gender=='Female' else '' }}"></span>
+
+            </td>
+
+            <td class="inline">Pregnancy Test:</td>
+
+            <td class="inline">
+
+                Neg
+                <span class="box {{ 'checked' if data.neg else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                N/A
+                <span class="box {{ 'checked' if data.NA else '' }}"></span>
+
             </td>
         </tr>
-        </table>
-    </div>
+    </table>
+</div>
 
+<!-- TYPE OF SURGERY -->
+<div class="card">
+    <table>
+        <tr>
+            <td class="main-label">Type of Surgery</td>
+
+            <td class="inline">
+
+                Elect
+                <span class="box {{ 'checked' if data.elective else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Emerg
+                <span class="box {{ 'checked' if data.emergency else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Urg
+                <span class="box {{ 'checked' if data.urgent else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Redo
+                <span class="box {{ 'checked' if data.redo else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Off
+                <span class="box {{ 'checked' if data.offpump else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Standby
+                <span class="box {{ 'checked' if data.standby else '' }}"></span>
+
+            </td>
+        </tr>
+    </table>
+</div>
     <!-- CARDIAC STATUS PER ECHO-->
     <div class="card">
         <table>
             <tr>
-                <td class="inline" colspan="3">Cardiac status per Echo:</td>
-                <td class="inline" colspan="3">{{ data.cardiac }}</td>
+                <td class="main-label" >Cardiac status per Echo:</td>
+                <td class="inline" >{{ data.cardiac }}</td>
                 <td class="inline" style="text-align:right;" >EF(%)</td>
                 <td class="inline">{{ data.ef }}</td>
             </tr>
@@ -311,7 +359,7 @@ td:first-child,
     <div class="card">
         <table>
             <tr>
-                <td>Angiography Report:</td>
+                <td class="main-label" >Angiography Report:</td>
                 <td class="inline">{{ data.report }}</td>
             </tr>
         </table>
@@ -320,170 +368,244 @@ td:first-child,
      <!-- Significant Co-morbidities -->
     <div class="card">
         <table>
-
             <tr>
-                <td style="width:25%;">Significant Co-morbidities:</td>
-            
-                <td class="inline" style="width:45%;"><span class="box {{ 'checked' if data.HTN else '' }}"></span> 
-                    HTN {{ "☑" if data.HTN else "☐" }} &nbsp;&nbsp;
-                    DM {{ "☑" if data.DM else "☐" }} &nbsp;&nbsp;
-                    Renal {{ "☑" if data.renal else "☐" }} &nbsp;&nbsp;
-                    Anaemia {{ "☑" if data.aneamia else "☐" }} &nbsp;&nbsp;
-                    Prev {{ "☑" if data.previous else "☐" }} &nbsp;&nbsp;
-                    Other {{ "☑" if data.other else "☐" }}
-                </td>    
+                <td class="main-label" style="width:25%;">Significant Co-morbidities:</td>
+    
+                <td class="inline" style="width:45%;">
+    
+                    <label class="cb">
+                        <span class="box {{ 'checked' if data.HTN else '' }}"></span>
+                        HTN
+                        <span class="box {{ 'checked' if data.DM else '' }}"></span>
+                        DM
+                        <span class="box {{ 'checked' if data.renal else '' }}"></span>
+                        Renal
+                        <span class="box {{ 'checked' if data.aneamia else '' }}"></span>
+                        Anaemia
+                        <span class="box {{ 'checked' if data.previous else '' }}"></span>
+                        Prev
+                        <span class="box {{ 'checked' if data.other else '' }}"></span>
+                        Other
+                    </label>
+                </td>
                 <td class="inline" style="width:30%;">{{ data.yesother }}</td>
             </tr>
-            
         </table>
     </div>
+<!-- MECHANICAL SUPPORT -->
+<div class="card">
+    <table>
+        <tr>
+            <td class="main-label">Mechanical Support:</td>
 
-    <!-- MECHANICAL SUPPORT -->
-    <div class="card">
-        <table >
-            <tr>
-                <td>Mechanical Support:</td>
-                <td class="inline">
-                    IABP {{ "☑" if data.IABP else "☐" }}
-                    ECMO {{ "☑" if data.ecmo else "☐" }}
-                    VAD {{ "☑" if data.vad else "☐" }}
-                    N/A {{ "☑" if data.na else "☐" }}
-                </td>
-            </tr>
-        </table>
-    </div>
+            <td class="inline"  style="width:45%;>
+              
+                 <label class="cb">
+                    <span class="box {{ 'checked' if data.IABP else '' }}"></span> IABP
+                    <span class="box {{ 'checked' if data.ecmo else '' }}"></span> ECMO
+                    <span class="box {{ 'checked' if data.vad else '' }}"></span> VAD
+                    <span class="box {{ 'checked' if data.na else '' }}"></span> N/A
+                
+                </label>
+            </td>    
+         </tr>
+    </table>
+</div>
 
     <!-- COAGULATION STATUS -->
-    <div class="card">
-        <table>
-            <tr>
-                    <td class="inline" colspan="2">Coagulation Status:</td>
-                    <td class="inline">Blood Group</td>
-                    <td>{{ data.bg }}</td>
-                    <td class="inline">Heparin sensitivity</td>
-                    <td>{{ data.heparin }}</td>
-                
-                    <td class="inline">HIT {{ "☑" if data.HIT else "☐" }}</td>
-                    <td class="inline">Sickle Cell Anaemia {{ "☑" if data.sickle else "☐" }}</td>
-                    <td class="inline">Cold Agglutnins {{ "☑" if data.cold else "☐" }}</td>
-            </tr> 
-        </table>
-    </div>
+<div class="card">
+    <table>
+        <tr>
+            <td class="main-label">Coagulation Status:</td>
+
+            <td class="inline">
+
+                Blood Group: <strong>{{ data.bg }}</strong>
+
+                &nbsp;&nbsp;
+
+                Heparin sensitivity: <strong>{{ data.heparin }}</strong>
+
+                &nbsp;&nbsp;
+
+                HIT
+                <span class="box {{ 'checked' if data.HIT else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Sickle
+                <span class="box {{ 'checked' if data.sickle else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Cold
+                <span class="box {{ 'checked' if data.cold else '' }}"></span>
+
+            </td>
+        </tr>
+    </table>
+</div>
     <!-- CEREBRAL,PULMONARY AND RENAL STATUS -->
     <div class="card">
         <table>
-            <tr><td>Cerebral Status:</td><td>{{ data.cerebral }}</td></tr>
-            <tr><td>Pulmonary Status:</td><td>{{ data.pulmonary }}</td></tr>
-            <tr><td>Renal Status:</td><td>{{ data.renal }}</td></tr>
+            <tr><td class="main-label" >Cerebral Status:</td>
+                <td class="inline">{{ data.cerebral }}</td>
+            </tr>
+            <tr>
+                <td class="main-label" >Pulmonary Status:</td>
+                <td class="inline">{{ data.pulmonary }}</td>
+            </tr>
+            <tr><td class="main-label" >Renal Status:</td>
+                <td class="inline">{{ data.renal }}</td>
+            </tr>
         </table>
     </div>
 
     <div class="card">
-        <table class="preop">
-    
-            <!-- DEFINE COLUMN WIDTHS ONCE -->
-            <colgroup>
-                <col class="col-main">
-                <col class="col-label"><col class="col-value">
-                <col class="col-label"><col class="col-value">
-                <col class="col-label"><col class="col-value">
-            </colgroup>
+        <table>
     
             <!-- ROW 1 -->
             <tr>
-                <td class="label" rowspan="3">Pre-Operative Tests</td>
+                <td class="main-label" rowspan="3">Pre-Operative Tests</td>
     
-                <td class="inline">HB</td>
-                <td>{{ data.HB }}</td>
+                <td >HB</td>
+                <td class="inline">{{ data.HB }}</td>
     
-                <td class="inline">WBC</td>
-                <td>{{ data.WBC }}</td>
+                <td>WBC</td>
+                <td class="inline">{{ data.WBC }}</td>
     
-                <td class="inline">PLT</td>
-                <td>{{ data.PLT }}</td>
-                <td class="inline">HbA1C</td>
-                <td>{{ data.HbA1C }}</td>
+                <td >PLT</td>
+                <td class="inline">{{ data.PLT }}</td>
+                <td >HbA1C</td>
+                <td class="inline">{{ data.HbA1C }}</td>
+               
             </tr>
     
             <!-- ROW 2 -->
             <tr>
-    
-                <td class="inline">Creatinine</td>
-                <td>{{ data.creatinine }}</td>
-    
-                <td class="inline">ESR</td>
-                <td>{{ data.ESR }}</td>
-                <td class="inline">Na</td>
-                <td>{{ data.Na }}</td>
-    
-                <td class="inline">K</td>
-                <td>{{ data.K }}</td>
+                <td >Creatinine</td>
+                <td class="inline">{{ data.creatinine }}</td>
+                <td >ESR</td>
+                <td class="inline">{{ data.ESR }}</td>
+                <td >Na</td>
+                <td class="inline">{{ data.Na }}</td>
+                <td >K</td>
+                <td class="inline">{{ data.K }}</td>
             </tr>
     
             <!-- ROW 3 -->
             
             <tr>
-                <td class="inline">MRSA</td>
-                <td colspan="3">{{ data.MRSA }}</td>
-    
-                <td class="inline">Serology</td>
-                <td colspan="3">{{ data.serology }}</td>
+                <td >MRSA</td>
+                <td class="inline" colspan="1" >{{ data.MRSA }}</td>
+                <td >Serology</td>
+                <td class="inline" colspan=""  >{{ data.serology }}</td>
+                <td></td>
+                <td></td>
             </tr>
     
         </table>
     </div>
-    <!-- CANNULATION  -->
-    <div class="card">
-        <table>
+
+    <!-- CANNULATION -->
+<div class="card">
+    <table>
         <tr>
-            <td>Cannulation:</td>
+            <td class="main-label">Cannulation:</td>
+
             <td class="inline">
-                Central{{ "☑" if data.central else "☐" }}
-                Peripheral{{ "☑" if data.peripheral else "☐" }}
-                Mininal Invasive{{ "☑" if data.minimal else "☐" }}
-                Mini-Sternotomy{{ "☑" if data.mini else "☐" }}
+
+                Central
+                <span class="box {{ 'checked' if data.central else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Peripheral
+                <span class="box {{ 'checked' if data.peripheral else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Minimal Invasive
+                <span class="box {{ 'checked' if data.minimal else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Mini-Sternotomy
+                <span class="box {{ 'checked' if data.mini else '' }}"></span>
+
             </td>
         </tr>
-        </table>
-    </div>
+    </table>
+</div>
 
-    <!-- DOPPLER ULTRA/CT REPORT--> 
-    <div class="card">
-        <table> 
-            <tr> 
-                <td class="inline" style="width:30%"> Doppler / CT Scan Report for Vascular Access: </td> 
-                <td class="inline" style="width:70%"> No {{ "☑" if data.doppler=="No" else "☐" }} &nbsp;&nbsp; Yes {{ "☑" if data.doppler=="Yes" else "☐" }} </td> 
-            </tr> 
-            <tr>
-                <td class="inline">Blood Flow</td>
-                <td>{{ data.BF }}</td> 
-                
-            </tr> 
-            <tr>
-                 <td class="inline">Vessel Diameter</td> 
-                 <td>{{ data.VD }}</td> 
-            </tr> 
-            <tr>
-                <td class="inline" style="width:30%"> Presence of Stenosis or Occlusions: </td> 
-                
-                <td class="inline">
-                    No {{ "☑" if data.sNo else "☐" }}
-                    &nbsp;&nbsp;
-                    Yes {{ "☑" if data.sYes else "☐" }}
-                    &nbsp;&nbsp;
-                    Not Mentioned {{ "☑" if data.snot else "☐" }}
-                </td>
-            </tr> 
-        </table> 
-    </div> 
+    <!-- DOPPLER ULTRA/CT REPORT -->
+<div class="card">
+    <table>
 
+        <tr>
+            <td class="main-label" style="width:30%">
+                Doppler / CT Scan Report for Vascular Access:
+            </td>
+
+            <td class="inline" style="width:70%">
+
+                No
+                <span class="box {{ 'checked' if data.doppler=='No' else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Yes
+                <span class="box {{ 'checked' if data.doppler=='Yes' else '' }}"></span>
+
+            </td>
+        </tr>
+
+        {% if data.doppler == "Yes" %}
+
+        <tr>
+            <td class="main-label">Blood Flow</td>
+            <td class="inline">{{ data.BF }}</td>
+        </tr>
+
+        <tr>
+            <td class="main-label">Vessel Diameter</td>
+            <td class="inline">{{ data.VD }}</td>
+        </tr>
+
+        {% endif %}
+
+        <tr>
+            <td class="main-label" style="width:30%">
+                Presence of Stenosis or Occlusions:
+            </td>
+
+            <td class="inline">
+
+                No
+                <span class="box {{ 'checked' if data.sNo else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Yes
+                <span class="box {{ 'checked' if data.sYes else '' }}"></span>
+
+                &nbsp;&nbsp;
+
+                Not Mentioned
+                <span class="box {{ 'checked' if data.snot else '' }}"></span>
+
+            </td>
+        </tr>
+
+    </table>
+</div>
   
     <!--PERFUSION CARE PLAN -->
     <div class="card">
         <div class="main-label">Perfusion Care Plan:</div>
             <table>
                 <tr>
-                    <td style="height:30px;">{{ data.plan }}</td>
+                    <td class="inline" style="height:30px;">{{ data.plan }}</td>
                 </tr>
             </table>
     </div>
@@ -492,12 +614,14 @@ td:first-child,
     <div class="card">
         <table>
             <tr>
-                <td  class="inline" style="text-align:left;">
-                    Perfusionist: {{ data.perfusionist }}
-                </td>
-                <td  class="inline" style="text-align:right;">
+                <td  class="main-label" style="text-align:left;">
                     Date: {{ data.date }}
                 </td>
+                <td class="main-label" style="text-align:right;">
+                    Perfusionist: {{ data.perfusionist }}
+                </td>
+               
+               
             </tr>
         </table>
     </div>
