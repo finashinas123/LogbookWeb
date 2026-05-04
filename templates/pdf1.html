@@ -259,6 +259,9 @@ input[type="checkbox"] {
                 <label class="cb">
                     <span class="box {{ 'checked' if data.allergy=='No' else '' }}"></span>
                     No
+                    
+                &nbsp;&nbsp;
+
                     <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
                     Yes
                 </label>
@@ -387,9 +390,9 @@ input[type="checkbox"] {
     <div class="card">
         <table>
             <tr>
-                <td class="main-label" style="width:25%;">Significant Co-morbidities:</td>
+                <td class="main-label" ">Significant Co-morbidities:</td>
     
-                <td class="inline" style="width:45%;">
+                <td class="inline" ">
     
                     <label class="cb">
                         <span class="box {{ 'checked' if data.HTN else '' }}"></span>
@@ -423,11 +426,17 @@ input[type="checkbox"] {
               
                  <label class="cb">
                     <span class="box {{ 'checked' if data.IABP else '' }}"></span> IABP
+                     
                       &nbsp;&nbsp;
+                     
                     <span class="box {{ 'checked' if data.ecmo else '' }}"></span> ECMO
-                      &nbsp;&nbsp;
+                     
+                     &nbsp;&nbsp;
+                     
                     <span class="box {{ 'checked' if data.vad else '' }}"></span> VAD
-                      &nbsp;&nbsp;
+                     
+                     &nbsp;&nbsp;
+                     
                     <span class="box {{ 'checked' if data.na else '' }}"></span> N/A
                 
                 </label>
@@ -441,10 +450,10 @@ input[type="checkbox"] {
     <table>
         <tr>
             <td class="main-label">Coagulation Status:</td>
-
+            <td class="inline">  Blood Group: <strong>{{ data.bg }}</strong></td>
             <td class="inline">
 
-                Blood Group: <strong>{{ data.bg }}</strong>
+              
 
                 &nbsp;&nbsp;
                 
