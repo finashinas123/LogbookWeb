@@ -97,7 +97,7 @@ td {
 input[type="checkbox"] {
     transform: scale(1.8);   /* increase size */
     margin-right: 8px;
-    accent-color: black;     /* makes tick darker */
+    accent-color: rgb(158, 84, 84);     /* makes tick darker */
 }
 
 /* FLEX */
@@ -112,22 +112,42 @@ input[type="checkbox"] {
 .cb {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
-    margin-right: 5px;
-}
-.box {
-    width: 20px;
-    height: 20px;
-    border: 2.5px solid black;
+    gap: 4px;
+    margin-right: 8px;
+    font-size: 12px;
 }
 
-.box.checked::after {
-    left: 6px;
-    top: 2px;
-    width: 6px;
-    height: 12px;
-    border-width: 0 3px 3px 0;
+/* box */
+.box {
+    width: 13px;
+    height: 13px;
+    border: 2px solid #000;
+    display: inline-block;
+    position: relative;
+    flex-shrink: 0;
+    margin-right: 4px;
 }
+
+/* REAL visible tick (longer + outside box feel) */
+.box.checked::after {
+    content: "";
+    position: absolute;
+
+    /* extend OUTSIDE box slightly */
+    left: 6px;
+    top: -2px;
+
+    width: 7px;
+    height: 14px;
+
+    border: solid #000;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+
+    /* makes it visually stronger in PDF rendering */
+    box-sizing: content-box;
+}
+
 /* INLINE TEXT */
 .inline {
     line-height: 1;
@@ -228,24 +248,29 @@ input[type="checkbox"] {
         </div>
     </div>
 
-    <!-- ALLERGY -->
-    <div class="card">
-        <table>
-            <tr>
-                <td class="main-label" >Allergy</td>
-                <td class="inline">
-                    <label class="cb">
-                         <span class="box {{ 'checked' if data.allergy=='No' else '' }}"></span>
-                        No
-                        <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
-                        Yes
-                    </label>
-                </td>
-                <td class="inline">{{ data.allergyyes }}</td>
-            </tr>
-        </table>
-    </div>
-   
+   <!-- ALLERGY -->
+<div class="card">
+    <table>
+        <tr>
+            <td class="main-label">Allergy</td>
+
+            <td class="inline">
+
+                <label class="cb">
+                    <span class="box {{ 'checked' if data.allergy=='No' else '' }}"></span>
+                    No
+                    <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
+                    Yes
+                </label>
+
+            </td>
+            <td class="inline">
+                {{ data.allergyyes }}
+            </td>
+
+        </tr>
+    </table>
+</div>
 
     <!-- DIAGNOSIS -->
     <div class="card">
@@ -372,9 +397,12 @@ input[type="checkbox"] {
                         <span class="box {{ 'checked' if data.DM else '' }}"></span>
                         DM
                         <span class="box {{ 'checked' if data.renal else '' }}"></span>
-                        Renal impairment
+                        Renal Impairment
                         <span class="box {{ 'checked' if data.aneamia else '' }}"></span>
                         Anaemia
+                        
+                    </label>
+                    <label class="cb">
                         <span class="box {{ 'checked' if data.previous else '' }}"></span>
                         Previous surgeries
                         <span class="box {{ 'checked' if data.other else '' }}"></span>
@@ -391,7 +419,7 @@ input[type="checkbox"] {
         <tr>
             <td class="main-label">Mechanical Support:</td>
 
-            <td class="inline"  style="width:45%;>
+            <td class="inline"  >
               
                  <label class="cb">
                     <span class="box {{ 'checked' if data.IABP else '' }}"></span> IABP
@@ -415,7 +443,6 @@ input[type="checkbox"] {
 
                 Blood Group: <strong>{{ data.bg }}</strong>
 
-                &nbsp;&nbsp;
 
                 HIT
                 <span class="box {{ 'checked' if data.HIT else '' }}"></span>
@@ -427,7 +454,7 @@ input[type="checkbox"] {
 
                 &nbsp;&nbsp;
 
-                Cold agglutnins
+                Cold Agglutnins
                 <span class="box {{ 'checked' if data.cold else '' }}"></span>
 
             </td>
@@ -457,40 +484,39 @@ input[type="checkbox"] {
             <tr>
                 <td class="main-label" rowspan="3">Pre-Operative Tests</td>
     
-                <td >HB</td>
+                <td class="inline">HB</td>
                 <td class="inline">{{ data.HB }}</td>
     
-                <td>WBC</td>
+                <td class="inline">WBC</td>
                 <td class="inline">{{ data.WBC }}</td>
     
-                <td >PLT</td>
+                <td class="inline" >PLT</td>
                 <td class="inline">{{ data.PLT }}</td>
-                <td >HbA1C</td>
+                <td  class="inline">HbA1C</td>
                 <td class="inline">{{ data.HbA1C }}</td>
                
             </tr>
     
             <!-- ROW 2 -->
             <tr>
-                <td >Creatinine</td>
+                <td class="inline" >Creatinine</td>
                 <td class="inline">{{ data.creatinine }}</td>
-                <td >ESR</td>
+                <td class="inline" >ESR</td>
                 <td class="inline">{{ data.ESR }}</td>
-                <td >Na</td>
+                <td class="inline">Na</td>
                 <td class="inline">{{ data.Na }}</td>
-                <td >K</td>
+                <td  class="inline">K</td>
                 <td class="inline">{{ data.K }}</td>
             </tr>
     
             <!-- ROW 3 -->
             
             <tr>
-                <td >MRSA</td>
+                <td class="inline" >MRSA</td>
                 <td class="inline" colspan="1" >{{ data.MRSA }}</td>
-                <td >Serology</td>
+                <td  class="inline">Serology</td>
                 <td class="inline" colspan=""  >{{ data.serology }}</td>
-                <td></td>
-                <td></td>
+               
             </tr>
     
         </table>
