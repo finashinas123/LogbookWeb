@@ -76,9 +76,9 @@ h2 {
 
 /* CARD */
 .card {
-    border: 1px solid #e7ebf2;
-    padding: 4px;
-    margin-bottom: 4px;
+    border: 0.5px solid #e7ebf2;
+    padding: 2px;
+    margin-bottom: 2px;
     background: #f7fcf4;
     
     
@@ -130,7 +130,7 @@ td:first-child,
 
 /* INLINE TEXT */
 .inline {
-    line-height: 1.3;
+    line-height: 1;
    
 
 }
@@ -249,11 +249,11 @@ td:first-child,
         <table>
             <tr>
                 <td >Diagnosis</td>
-                <td class="inline" style="height:30px";> {{ data.diagnosis }}</td>
+                <td class="inline" style="height:20px";> {{ data.diagnosis }}</td>
             </tr>
             <tr>
                 <td >Procedure</td>
-                <td class="inline" style="height:30px";> {{ data.procedure }}</td>
+                <td class="inline" style="height:20px";> {{ data.procedure }}</td>
             </tr>
         </table>
     </div>
@@ -391,40 +391,40 @@ td:first-child,
             <tr>
                 <td class="label" rowspan="3">Pre-Operative Tests</td>
     
-                <td class="sub-label">HB</td>
+                <td class="inline">HB</td>
                 <td>{{ data.HB }}</td>
     
-                <td class="sub-label">WBC</td>
+                <td class="inline">WBC</td>
                 <td>{{ data.WBC }}</td>
     
-                <td class="sub-label">PLT</td>
+                <td class="inline">PLT</td>
                 <td>{{ data.PLT }}</td>
-                <td class="sub-label">HbA1C</td>
+                <td class="inline">HbA1C</td>
                 <td>{{ data.HbA1C }}</td>
             </tr>
     
             <!-- ROW 2 -->
             <tr>
     
-                <td class="sub-label">Creatinine</td>
+                <td class="inline">Creatinine</td>
                 <td>{{ data.creatinine }}</td>
     
-                <td class="sub-label">ESR</td>
+                <td class="inline">ESR</td>
                 <td>{{ data.ESR }}</td>
-                <td class="sub-label">Na</td>
+                <td class="inline">Na</td>
                 <td>{{ data.Na }}</td>
     
-                <td class="sub-label">K</td>
+                <td class="inline">K</td>
                 <td>{{ data.K }}</td>
             </tr>
     
             <!-- ROW 3 -->
             
             <tr>
-                <td class="sub-label">MRSA</td>
+                <td class="inline">MRSA</td>
                 <td colspan="3">{{ data.MRSA }}</td>
     
-                <td class="sub-label">Serology</td>
+                <td class="inline">Serology</td>
                 <td colspan="3">{{ data.serology }}</td>
             </tr>
     
