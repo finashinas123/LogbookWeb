@@ -115,27 +115,18 @@ input[type="checkbox"] {
     gap: 2px;
     margin-right: 5px;
 }
-
-/* box */
 .box {
-    width: 14px;
-    height: 14px;
-    border: 2px solid black;
-    display: inline-block;
-    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2.5px solid black;
 }
 
-/* tick */
 .box.checked::after {
-    content: "";
-    position: absolute;
-    left: 3px;
-    top: 0px;
-    width: 5px;
-    height: 9px;
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border-width: 0 3px 3px 0;
 }
 /* INLINE TEXT */
 .inline {
@@ -244,6 +235,8 @@ input[type="checkbox"] {
                 <td class="main-label" >Allergy</td>
                 <td class="inline">
                     <label class="cb">
+                         <span class="box {{ 'checked' if data.allergy=='No' else '' }}"></span>
+                        No
                         <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
                         Yes
                     </label>
@@ -421,10 +414,6 @@ input[type="checkbox"] {
             <td class="inline">
 
                 Blood Group: <strong>{{ data.bg }}</strong>
-
-                &nbsp;&nbsp;
-
-                Heparin sensitivity: <strong>{{ data.heparin }}</strong>
 
                 &nbsp;&nbsp;
 
