@@ -447,9 +447,13 @@ input[type="checkbox"] {
     <table>
         <tr>
             <td class="main-label">Coagulation Status:</td>
-            <td >  Blood Group: <strong>{{ data.bg }}</strong></td>
+            <td class="inline">  Blood Group: <strong>{{ data.bg }}</strong></td>
             <td class="inline">
+                
                 &nbsp;&nbsp;
+
+                &nbsp;&nbsp;
+              
                 
                 HIT
                 <span class="box {{ 'checked' if data.HIT else '' }}"></span>
