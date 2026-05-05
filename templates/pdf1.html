@@ -16,7 +16,7 @@ body {
     font-size: 10px;
     margin: 0;
     padding: 0;
-    color: #111;
+    color: #000000;
     line-height: 1.3;
 }
 
@@ -39,7 +39,7 @@ body {
 
 .header-title {
     display: inline-block;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: #0456f9;
 }
@@ -63,7 +63,9 @@ h2 {
     border: 0.5px solid #e7ebf2;
     padding: 2px;
     margin-bottom: 2px;
-    background: #f7fcf4; 
+    background: #f7fcf4;
+    
+    
 }
 
 /* SECTION TITLE */
@@ -152,6 +154,7 @@ input[type="checkbox"] {
     font-weight: bold;
     font-size: 12px;
     background: #f9fafb;
+   
 
 }
 
@@ -256,9 +259,6 @@ input[type="checkbox"] {
                 <label class="cb">
                     <span class="box {{ 'checked' if data.allergy=='No' else '' }}"></span>
                     No
-                    
-                &nbsp;&nbsp;
-
                     <span class="box {{ 'checked' if data.allergy=='Yes' else '' }}"></span>
                     Yes
                 </label>
@@ -389,7 +389,7 @@ input[type="checkbox"] {
             <tr>
                 <td class="main-label" ">Significant Co-morbidities:</td>
     
-                <td class="inline" ">
+                <td class="inline">
     
                     <label class="cb">
                         <span class="box {{ 'checked' if data.HTN else '' }}"></span>
@@ -423,17 +423,8 @@ input[type="checkbox"] {
               
                  <label class="cb">
                     <span class="box {{ 'checked' if data.IABP else '' }}"></span> IABP
-                     
-                      &nbsp;&nbsp;
-                     
                     <span class="box {{ 'checked' if data.ecmo else '' }}"></span> ECMO
-                     
-                     &nbsp;&nbsp;
-                     
                     <span class="box {{ 'checked' if data.vad else '' }}"></span> VAD
-                     
-                     &nbsp;&nbsp;
-                     
                     <span class="box {{ 'checked' if data.na else '' }}"></span> N/A
                 
                 </label>
@@ -447,14 +438,15 @@ input[type="checkbox"] {
     <table>
         <tr>
             <td class="main-label">Coagulation Status:</td>
-            <td class="inline">  Blood Group: <strong>{{ data.bg }}</strong></td>
+
             <td class="inline">
-                
+
+                Blood Group: <strong>{{ data.bg }}</strong>
+
                 &nbsp;&nbsp;
 
                 &nbsp;&nbsp;
-              
-                
+
                 HIT
                 <span class="box {{ 'checked' if data.HIT else '' }}"></span>
 
