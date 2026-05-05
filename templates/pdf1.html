@@ -63,9 +63,7 @@ h2 {
     border: 0.5px solid #e7ebf2;
     padding: 2px;
     margin-bottom: 2px;
-    background: #f7fcf4;
-    
-    
+    background: #f7fcf4; 
 }
 
 /* SECTION TITLE */
@@ -154,7 +152,6 @@ input[type="checkbox"] {
     font-weight: bold;
     font-size: 12px;
     background: #f9fafb;
-   
 
 }
 
@@ -450,8 +447,10 @@ input[type="checkbox"] {
     <table>
         <tr>
             <td class="main-label">Coagulation Status:</td>
-            <td class="inline">  Blood Group: <strong>{{ data.bg }}</strong></td>
+            <td >  Blood Group: <strong>{{ data.bg }}</strong></td>
             <td class="inline">
+                &nbsp;&nbsp;
+                
                 HIT
                 <span class="box {{ 'checked' if data.HIT else '' }}"></span>
 
