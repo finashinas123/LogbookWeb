@@ -393,22 +393,23 @@ input[type="checkbox"] {
     
                     <label class="cb">
                         <span class="box {{ 'checked' if data.HTN else '' }}"></span>
-                        HTN   
+                        HTN
                         <span class="box {{ 'checked' if data.DM else '' }}"></span>
                         DM
                         <span class="box {{ 'checked' if data.renal else '' }}"></span>
                         Renal Impairment
                         <span class="box {{ 'checked' if data.aneamia else '' }}"></span>
                         Anaemia
+                        
                     </label>
                     <label class="cb">
-                        <span class="box {{ 'checked' if data.previous else '' }}"></span>  
-                      Previous surgeries
+                        <span class="box {{ 'checked' if data.previous else '' }}"></span>
+                        Previous surgeries
                         <span class="box {{ 'checked' if data.other else '' }}"></span>
                         Other
                     </label>
                 </td>
-                <td class="inline ">{{ data.yesother }}</td>
+                <td class="inline" style="width:40%;">{{ data.yesother }}</td>
             </tr>
         </table>
     </div>
